@@ -1,0 +1,64 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Projects\\VisualStudio\\Csharp\\2semester\\PROJEKT2\\TESTAvaloniaApplication\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E1E88C9B-79ED-BD2B-10F0-F2FB0D5EF631}|TESTAvaloniaApplication\\TESTAvaloniaApplication.csproj|c:\\projects\\visualstudio\\csharp\\2semester\\projekt2\\testavaloniaapplication\\testavaloniaapplication\\views\\mainwindow.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}",
+      "RelativeMoniker": "D:0:0:{E1E88C9B-79ED-BD2B-10F0-F2FB0D5EF631}|TESTAvaloniaApplication\\TESTAvaloniaApplication.csproj|solutionrelative:testavaloniaapplication\\views\\mainwindow.axaml||{6D5344A2-2FCD-49DE-A09D-6A14FD1B1224}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E1E88C9B-79ED-BD2B-10F0-F2FB0D5EF631}|TESTAvaloniaApplication\\TESTAvaloniaApplication.csproj|c:\\projects\\visualstudio\\csharp\\2semester\\projekt2\\testavaloniaapplication\\testavaloniaapplication\\viewmodels\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E1E88C9B-79ED-BD2B-10F0-F2FB0D5EF631}|TESTAvaloniaApplication\\TESTAvaloniaApplication.csproj|solutionrelative:testavaloniaapplication\\viewmodels\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{73068c07-fba1-453f-99ae-6edf972119b2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.axaml",
+              "DocumentMoniker": "C:\\Projects\\VisualStudio\\Csharp\\2semester\\PROJEKT2\\TESTAvaloniaApplication\\TESTAvaloniaApplication\\Views\\MainWindow.axaml",
+              "RelativeDocumentMoniker": "TESTAvaloniaApplication\\Views\\MainWindow.axaml",
+              "ToolTip": "C:\\Projects\\VisualStudio\\Csharp\\2semester\\PROJEKT2\\TESTAvaloniaApplication\\TESTAvaloniaApplication\\Views\\MainWindow.axaml",
+              "RelativeToolTip": "TESTAvaloniaApplication\\Views\\MainWindow.axaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-03-18T08:30:38.727Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindowViewModel.cs",
+              "DocumentMoniker": "C:\\Projects\\VisualStudio\\Csharp\\2semester\\PROJEKT2\\TESTAvaloniaApplication\\TESTAvaloniaApplication\\ViewModels\\MainWindowViewModel.cs",
+              "RelativeDocumentMoniker": "TESTAvaloniaApplication\\ViewModels\\MainWindowViewModel.cs",
+              "ToolTip": "C:\\Projects\\VisualStudio\\Csharp\\2semester\\PROJEKT2\\TESTAvaloniaApplication\\TESTAvaloniaApplication\\ViewModels\\MainWindowViewModel.cs",
+              "RelativeToolTip": "TESTAvaloniaApplication\\ViewModels\\MainWindowViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-18T08:30:32.295Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+    <Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:TESTAvaloniaApplication.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="TESTAvaloniaApplication.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="TESTAvaloniaApplication"
+        Width="800"
+        Height="480"
+        Background="#1e1e1e">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Grid ColumnDefinitions="*,250">
+
+    <Border Grid.Column="0" Margin="20" Background="#2d2d2d" CornerRadius="10">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock Text="[ Varmekort her ]"
+                       Foreground="Gray"
+                       FontSize="24"
+                       HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+        <StackPanel Grid.Column="1" Margin="20" Spacing="70" VerticalAlignment="Center">
+			<TextBlock Text="Status: Normal"
+                       Foreground="#4CAF50"
+                       FontSize="26"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"/>
+            <Button Content="Kalibrer System"
+                    Width="200"
+                    Height="70"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    Background="#2196F3"
+                    Foreground="white"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    CornerRadius="10"
+                    HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        </Grid>
+
+
+</Window>
