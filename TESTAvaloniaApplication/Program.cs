@@ -20,5 +20,6 @@ namespace TESTAvaloniaApplication
                 .LogToTrace();
 
         int x = 10; //TEST MARCUS
+        int x = 309;
     }
 }
