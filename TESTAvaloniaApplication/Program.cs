@@ -18,11 +18,6 @@ namespace TESTAvaloniaApplication
                 .UsePlatformDetect()
                 .WithInterFont()
                 .LogToTrace();
-<<<<<<< HEAD
 
-      
-=======
-        
->>>>>>> 38cd0abd159e7ec18c073dfee461b563f11586a3
     }
 }
