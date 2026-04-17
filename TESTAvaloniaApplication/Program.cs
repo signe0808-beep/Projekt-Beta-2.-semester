@@ -19,7 +19,6 @@ namespace TESTAvaloniaApplication
                 .WithInterFont()
                 .LogToTrace();
 
-        int x = 10; //TEST MARCUS
-        int y = 309;
+      
     }
 }
