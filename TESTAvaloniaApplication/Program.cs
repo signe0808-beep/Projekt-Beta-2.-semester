@@ -18,8 +18,6 @@ namespace TESTAvaloniaApplication
                 .UsePlatformDetect()
                 .WithInterFont()
                 .LogToTrace();
-        int x = 7678; //maren
-        int x = 10; //TEST MARCUS
-        int x = 309;
+        
     }
 }
