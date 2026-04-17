@@ -8,8 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
+    <Folder Include="BusinessLayer\Models\" />
+    <Folder Include="BusinessLayer\Interfaces\" />
+    <Folder Include="BusinessLayer\Services\" />
+    <Folder Include="DataLayer\Interfaces\" />
+    <Folder Include="DataLayer\Drivers\" />
+    <Folder Include="DataLayer\Simulators\" />
   </ItemGroup>
 
   <ItemGroup>
