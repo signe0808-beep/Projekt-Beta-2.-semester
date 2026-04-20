@@ -10,13 +10,15 @@ using System.Threading; //giver mulighed for at bruge thread.SLeep (pause i loop
 
 namespace TESTAvaloniaApplication.BusinessLayer.Models
 {
-    enum State //her defineres der forskellige tilstande programmet skal køre igennem
+    public enum SystemStateEnum //her defineres der forskellige tilstande programmet skal køre igennem
     {
-        Init,
-        Calibration,
-        Monitoring,
-        Alarm
+        Initialisering,
+        Kalibrering,
+        Monitorering,
+        AlarmAktiv
     }
+   
+    //tænker dette skal flyttes, jeg har sat det meste ind et andet sted:)
     class Program //her skal selve state maskinen styres 
     {
         static State currentState = State.Init; //variabel der holder styr op hvilket state systemet er i lige nu, starter som initialize i vores diagram

@@ -1,4 +1,4 @@
-﻿namespace TESTAvaloniaApplication.PresentationLayer.ViewModels
+﻿namespace TESTAvaloniaApplication.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
