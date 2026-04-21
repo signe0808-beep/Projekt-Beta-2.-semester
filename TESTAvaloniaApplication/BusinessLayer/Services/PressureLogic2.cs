@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Timers;
 using System.Diagnostics;
+using System.Timers;
 using TESTAvaloniaApplication.BusinessLayer.Models;
+using static TESTAvaloniaApplication.BusinessLayer.Interfaces.Interface1; //gør det muligt at implementerer Interfaces
 
 namespace TESTAvaloniaApplication.BusinessLayer.Services
 {
@@ -32,7 +33,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
  denne Delta Time. Hvis hardwaren oplever lag, udlignes dette matematisk, så den samlede 
  procentsats altid passer med det faktiske antal sekunder, borgeren har siddet på måtten. 
  */
-    internal class PressureLogic2
+    internal class PressureLogic2 : IPressureLogic2 //- mangler referance??
     {
         //Systemets tilstand
         public SystemStateEnum CurrentState { get; private set; } = SystemStateEnum.Initialisering;
