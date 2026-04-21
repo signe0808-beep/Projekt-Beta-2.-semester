@@ -9,11 +9,11 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
  SYSTEMARKITEKTUR OG BUSINESSLOGIC
   
  Denne klasse er logikken bag tryksystemet. Den skal aflæse rådata fra matrixen (4*4) 
- filtrere støj, udregne risikoen for opdatere brugergrænsefladen.
+ filtrere støj, udregne risikoen tryksår og opdatere brugergrænsefladen.
  Logikken er bygget op omkring tre trin:
     1.STATE MACHINE
- Systemet kører påen asynkron Timer, der afvikler et "tick" med en fast frekvens 
- (fx 10 Hz, dette skal bare rettes til). Maskinen skifter dynamisk 
+ Systemet kører på en asynkron Timer, der afvikler et "tick" med en fast frekvens 
+ (fx 10 Hz, dette skal bare rettes til). Maskinen skifter 
  mellem fire tilstande: Initialisering, Kalibrering (Tare), Monitoring og AlarmAktiv.
     2. "LEAKY BUCKET" ALGORITMEN (SPANDE-METODEN)
  For at håndtere alle 16 sensorpunkter på samme tid, uden at skulle styre 16 
@@ -21,7 +21,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
  en vandspand med et hul i bunden:
  - Påfyldning: Når et tryk registreres (over et defineret støj-niveau), 
  lægges trykket ned i spanden for det specifikke punkt.
- - Aflastning: Samtidig trækkes der konstant en lille aflastnings-værdi ud af alle spande. 
+ - Aflastning: Samtidig trækkes der konstant en lille aflastningsværdi ud af alle spande. 
  - Resultat: Hvis et punkt belastes konstant, fyldes spanden op. Rammer den 100 %, 
  udløses alarmen. Flyttes trykket, falder værdien langsomt mod 0 igen (derfor aflastningen). Dette filtrerer 
  naturligt små ryk og stillingsskift fra uden at nulstille den samlede belastning.
