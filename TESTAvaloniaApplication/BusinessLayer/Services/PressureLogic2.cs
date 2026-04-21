@@ -5,6 +5,33 @@ using TESTAvaloniaApplication.BusinessLayer.Models;
 
 namespace TESTAvaloniaApplication.BusinessLayer.Services
 {
+    /* 
+ SYSTEMARKITEKTUR OG BUSINESSLOGIC
+  
+ Denne klasse er logikken bag tryksystemet. Den skal aflæse rådata fra matrixen (4*4) 
+ filtrere støj, udregne risikoen for opdatere brugergrænsefladen.
+ Logikken er bygget op omkring tre trin:
+    1.STATE MACHINE
+ Systemet kører påen asynkron Timer, der afvikler et "tick" med en fast frekvens 
+ (fx 10 Hz, dette skal bare rettes til). Maskinen skifter dynamisk 
+ mellem fire tilstande: Initialisering, Kalibrering (Tare), Monitoring og AlarmAktiv.
+    2. "LEAKY BUCKET" ALGORITMEN (SPANDE-METODEN)
+ For at håndtere alle 16 sensorpunkter på samme tid, uden at skulle styre 16 
+ stopure, bruger vi "Leaky Bucket" metodenm. Hvert punkt på måtten fungerer som 
+ en vandspand med et hul i bunden:
+ - Påfyldning: Når et tryk registreres (over et defineret støj-niveau), 
+ lægges trykket ned i spanden for det specifikke punkt.
+ - Aflastning: Samtidig trækkes der konstant en lille aflastnings-værdi ud af alle spande. 
+ - Resultat: Hvis et punkt belastes konstant, fyldes spanden op. Rammer den 100 %, 
+ udløses alarmen. Flyttes trykket, falder værdien langsomt mod 0 igen (derfor aflastningen). Dette filtrerer 
+ naturligt små ryk og stillingsskift fra uden at nulstille den samlede belastning.
+    3. DELTA TIME
+ For at sikre at algoritmen kan køre trods forsinkelser i hardwaren, benyttes Delta Time (Δt).
+ Tiden mellem hver 
+ måling beregnes præcist i sekunder. Al påfyldning og aflastning i spandene ganges med 
+ denne Delta Time. Hvis hardwaren oplever lag, udlignes dette matematisk, så den samlede 
+ procentsats altid passer med det faktiske antal sekunder, borgeren har siddet på måtten. 
+ */
     internal class PressureLogic2
     {
         //Systemets tilstand
@@ -12,20 +39,20 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
 
         //Timer og Delta Time
         private Timer _tickTimer;
-        private DateTime _lastTickTime;
+        private DateTime _lastTickTime; //DataTime er indbygget, og tager det præcise øjeblik
 
         // variable opgraderet til 4x4 bruger "leaky-bucket metoden"
         private double[,] _buckets = new double[4, 4]; // 16 "spande", der holder på "skaden"
-        private const double DECAY_CONSTANT = 5.0;     // Hvor meget der siver ud af spanden pr. sek
-        private const double ALARM_THRESHOLD = 100.0;  // Grænsen for alarm (Makkerens timeThreshold)
-        private const int NOISE_FLOOR = 15;            // Makkerens pressureThreshold
+        private const double DECAY_CONSTANT = 5.0;     // Hvor meget der siver ud af spanden pr. sek SKAL EVT RETTES, DETTE ER TILFÆLDIGT TAL
+        private const double ALARM_THRESHOLD = 100.0;  // Grænsen for alarm (Makkerens timeThreshold) SKAL HELT SIKKERT OGSÅ RETTES
+        private const int NOISE_FLOOR = 15;            // Makkerens pressureThreshold SKAL MÅLES OG RETTES EFTER
 
         // (Eventuelt et objekt til at snakke med hardwaren)
         // private ISensorReader _sensor; 
 
         public PressureLogic2()
         {
-            // Starter vores loop, der kører f.eks. hvert 100 millisekund
+            // Starter vores loop, der kører fx hvert 100 millisekund
             _tickTimer = new Timer(100);
             _tickTimer.Elapsed += RunStateMachineTick;
         }
@@ -83,7 +110,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
                             // Sørg for at spanden ikke går under 0
                             if (_buckets[r, c] < 0) _buckets[r, c] = 0;
 
-                            // Tjek om denne specifikke spand flyder over!
+                            // Tjek om denne specifikke spand flyder over
                             if (_buckets[r, c] >= ALARM_THRESHOLD)
                             {
                                 _buckets[r, c] = ALARM_THRESHOLD;
@@ -92,7 +119,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
                         }
                     }
 
-                    // SKIFT TILSTAND BASERET PÅ SPANDENE!
+                    // Skift tilstand baseret på spandene
                     if (anyBucketCritical)
                     {
                         CurrentState = SystemStateEnum.AlarmAktiv;
