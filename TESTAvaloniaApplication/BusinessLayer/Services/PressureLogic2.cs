@@ -73,7 +73,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
             _lastTickTime = currentTime;
 
             // Hent data (Fakes her indtil hardware er sat til)
-            int[,] currentMatrix = new int[4, 4]; // Her kalder vi normalt _sensor.ReadMatrix();
+            int[,] currentMatrix = new int[4, 4]; // Her kalder vi normalt _sensor.ReadMatrix(); 
 
             bool anyBucketCritical = false;
 
