@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Avalonia.Controls.Shapes;
-using static TESTAvaloniaApplication.BusinessLayer.Interfaces.Interface1; //gør det muligt at implementerer Interfaces
+using static TESTAvaloniaApplication.BusinessLayer.Interfaces.IStateMachine; //gør det muligt at implementerer Interfaces
 
 
 namespace TESTAvaloniaApplication.BusinessLayer.Services

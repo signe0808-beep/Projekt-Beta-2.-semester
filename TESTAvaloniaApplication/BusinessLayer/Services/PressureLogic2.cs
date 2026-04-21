@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Timers;
 using TESTAvaloniaApplication.BusinessLayer.Models;
-using static TESTAvaloniaApplication.BusinessLayer.Interfaces.Interface1; //gør det muligt at implementerer Interfaces
+using static TESTAvaloniaApplication.BusinessLayer.Interfaces.IPressureLogic2; //gør det muligt at implementerer Interfaces
 
 namespace TESTAvaloniaApplication.BusinessLayer.Services
 {
