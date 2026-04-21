@@ -57,7 +57,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
                             break; //stopper den her case
 
 
-                        case State.Alarm: //hopper over i alarm tilstand
+                        case State.Alarm: //hopper over i alarm tilstand 
                             Console.WriteLine("ALARM"); //udskriver alarm på display
 
                             float currentAlarm = sensor.Read(); //bliver ved med at aflæse tryk, stopper ikke med at måle
