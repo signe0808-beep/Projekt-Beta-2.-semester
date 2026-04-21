@@ -12,7 +12,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Interfaces
     {
         public interface IStateMachine
         {
-            SystemStateEnum CurrentState { get; } //Property fortæller hvilken state systemet er i
+            SystemStateEnum CurrentState { get; } //Property fortæller hvilken state systemet er i 
 
             //UI‑laget (Avalonia) skal kunne starte og stoppe StateMachine
             void start();
