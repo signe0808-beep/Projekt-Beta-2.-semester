@@ -27,8 +27,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
  naturligt små ryk og stillingsskift fra uden at nulstille den samlede belastning.
     3. DELTA TIME
  For at sikre at algoritmen kan køre trods forsinkelser i hardwaren, benyttes Delta Time (Δt).
- Tiden mellem hver 
- måling beregnes præcist i sekunder. Al påfyldning og aflastning i spandene ganges med 
+ Tiden mellem hver måling beregnes præcist i sekunder. Alt påfyldning og aflastning i spandene ganges med 
  denne Delta Time. Hvis hardwaren oplever lag, udlignes dette matematisk, så den samlede 
  procentsats altid passer med det faktiske antal sekunder, borgeren har siddet på måtten. 
  */
