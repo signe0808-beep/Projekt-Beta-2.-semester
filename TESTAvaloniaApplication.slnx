@@ -1,3 +1,5 @@
 <Solution>
+  <Project Path="BuisnessLayer/BuisnessLayer.csproj" Id="3e5b7fab-3a46-451f-80cf-484a722c62df" />
+  <Project Path="DataAccess/DataAccess.csproj" Id="529b3243-0294-44b0-92cd-e7c08e5ec283" />
   <Project Path="TESTAvaloniaApplication/TESTAvaloniaApplication.csproj" />
 </Solution>

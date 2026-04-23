@@ -9,8 +9,6 @@
 
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
-    <Folder Include="DataLayer\Interfaces\" />
-    <Folder Include="DataLayer\Drivers\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,11 +22,5 @@
       <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="BusinessLayer\Services\PressureLogic2.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
   </ItemGroup>
 </Project>
