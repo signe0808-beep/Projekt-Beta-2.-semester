@@ -11,8 +11,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Interfaces
     {
         SystemStateEnum CurrentState { get; } //Property fortæller hvilken state logikken er i
 
-        void RunStateMachineTick(double deltaTime, int[,] matrix); //Kaldes ved hvert tick fra state maskinen
-                                                           // deltaTime = tiden siden sidste tick og matrix = 4x4 trykmålinger fra sensoren
-        void StartSystem();
+        void RunStateMachineTick(); //Kaldes ved hvert tick fra state maskinen
+        void StartSystem(); //start af systemet
     }
 }
