@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Timers;
 using TESTAvaloniaApplication.BusinessLayer.Interfaces;
 using TESTAvaloniaApplication.BusinessLayer.Models;
-using static TESTAvaloniaApplication.BusinessLayer.Interfaces.IPressureLogic2; //gør det muligt at implementerer Interfaces
+ //gør det muligt at implementerer Interfaces
 
 
 namespace TESTAvaloniaApplication.BusinessLayer.Services
@@ -56,7 +56,12 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
         {
             // Starter vores loop, der kører fx hvert 100 millisekund
             _tickTimer = new Timer(100);
-            _tickTimer.Elapsed += RunStateMachineTick;
+            _tickTimer.Elapsed += OnTimerElapsed; //seperat metode til timer
+        }
+
+        private void OnTimerElapsed(object? senderm ElapsedEventArgs e)
+        {
+            RunStateMachineTick(); //kalder den public metode
         }
 
         public void StartSystem()
@@ -66,7 +71,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
         }
 
         // SELVE STATE MACHINEN OG LOGIKKEN (skal stå her splittet op i stedet for at være samlet)
-        private void RunStateMachineTick()
+        public void RunStateMachineTick()
         {
             // Beregn Delta Time (Hvor lang tid er der gået siden sidste måling)
             var currentTime = DateTime.Now;
@@ -135,9 +140,5 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
             }
         }
 
-        void IPressureLogic2.RunStateMachineTick()
-        {
-            RunStateMachineTick();
-        }
     }
 }
