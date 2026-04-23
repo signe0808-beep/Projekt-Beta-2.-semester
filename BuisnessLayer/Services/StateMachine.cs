@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Avalonia.Controls.Shapes;
 using static TESTAvaloniaApplication.BusinessLayer.Interfaces.IStateMachine; //gør det muligt at implementerer Interfaces
 
-
+/*
 namespace TESTAvaloniaApplication.BusinessLayer.Services
 {
     //Har kopiret direkte fra EnumState, Program, for at kunne implementere Interface.
@@ -77,5 +77,4 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
             }
         
     }
-}
-
+} *\
