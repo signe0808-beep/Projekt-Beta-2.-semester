@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Timers;
+using TESTAvaloniaApplication.BusinessLayer.Interfaces;
 using TESTAvaloniaApplication.BusinessLayer.Models;
 using static TESTAvaloniaApplication.BusinessLayer.Interfaces.IPressureLogic2; //gør det muligt at implementerer Interfaces
+
 
 namespace TESTAvaloniaApplication.BusinessLayer.Services
 {
@@ -131,6 +133,16 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
                     }
                     break;
             }
+        }
+
+        public void ProcessTick(double deltaTime, int[,] matrix)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Reset()
+        {
+            throw new NotImplementedException();
         }
     }
 }
