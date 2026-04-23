@@ -66,7 +66,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
         }
 
         // SELVE STATE MACHINEN OG LOGIKKEN (skal stå her splittet op i stedet for at være samlet)
-        private void RunStateMachineTick(object sender, ElapsedEventArgs e)
+        private void RunStateMachineTick()
         {
             // Beregn Delta Time (Hvor lang tid er der gået siden sidste måling)
             var currentTime = DateTime.Now;
