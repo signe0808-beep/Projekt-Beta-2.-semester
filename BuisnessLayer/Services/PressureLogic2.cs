@@ -40,7 +40,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
         public SystemStateEnum CurrentState { get; private set; } = SystemStateEnum.Initialisering;
 
         //Timer og Delta Time
-        private Timer _tickTimer;
+        private System.Timers.Timer _tickTimer;
         private DateTime _lastTickTime; //DataTime er indbygget, og tager det præcise øjeblik
 
         // variable opgraderet til 4x4 bruger "leaky-bucket metoden"
@@ -55,11 +55,11 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
         public PressureLogic2()
         {
             // Starter vores loop, der kører fx hvert 100 millisekund
-            _tickTimer = new Timer(100);
+            _tickTimer = new System.Timers.Timer(100);
             _tickTimer.Elapsed += OnTimerElapsed; //seperat metode til timer
         }
 
-        private void OnTimerElapsed(object? senderm ElapsedEventArgs e)
+        private void OnTimerElapsed(object? sender, ElapsedEventArgs e)
         {
             RunStateMachineTick(); //kalder den public metode
         }
