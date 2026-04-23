@@ -8,5 +8,13 @@ namespace TESTAvaloniaApplication.DataLayer.Simulators
 {
     internal class TestSimulator
     {
+        private int _step = 0;
+
+        public int[,] ReadMatrix()
+        {
+            int[,] matrix = new int[4, 4];
+
+            return matrix;
+        }
     }
 }
