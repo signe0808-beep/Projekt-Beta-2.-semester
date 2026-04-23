@@ -135,14 +135,9 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
             }
         }
 
-        public void ProcessTick(double deltaTime, int[,] matrix)
+        void IPressureLogic2.RunStateMachineTick()
         {
-            throw new NotImplementedException();
-        }
-
-        public void Reset()
-        {
-            throw new NotImplementedException();
+            RunStateMachineTick();
         }
     }
 }
