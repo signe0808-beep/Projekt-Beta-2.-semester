@@ -34,7 +34,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
  denne Delta Time. Hvis hardwaren oplever lag, udlignes dette matematisk, så den samlede 
  procentsats altid passer med det faktiske antal sekunder, borgeren har siddet på måtten. 
  */
-    public class PressureLogic2 : IPressureLogic2 //- mangler referance??
+    public class PressureLogic2:IPressureLogic2 //- mangler referance??
     {
         //Systemets tilstand
         public SystemStateEnum CurrentState { get; private set; } = SystemStateEnum.Initialisering;
@@ -45,8 +45,15 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
 
         // variable opgraderet til 4x4 bruger "leaky-bucket metoden"
         private double[,] _buckets = new double[4, 4]; // 16 "spande", der holder på "skaden"
-        private const double DECAY_CONSTANT = 5.0;     // Hvor meget der siver ud af spanden pr. sek SKAL EVT RETTES, DETTE ER TILFÆLDIGT TAL
-        private const double ALARM_THRESHOLD = 100.0;  // Grænsen for alarm (Makkerens timeThreshold) SKAL HELT SIKKERT OGSÅ RETTES
+        private double[,] _referenceMatrix = new double[4, 4]; //her gemmer vi startmodstanden ved kalibrering
+
+        //KONSTANTER
+
+        //Hvor hurtigt spand tømmes, her med 100% i sekundet
+        private const double DECAY_CONSTANT = 100.0;     // Hvor meget der siver ud af spanden pr. sek SKAL EVT RETTES, DETTE ER TILFÆLDIGT TAL
+       //dette betyder at punktet skal ændres med 5000% for alarm
+        private const double ALARM_THRESHOLD = 5000.0;  // Grænsen for alarm (timeThreshold) SKAL HELT SIKKERT OGSÅ RETTES
+       //dette tal betyder nu at punktet skal ændre modstand med mindst 15%
         private const int NOISE_FLOOR = 15;            // Makkerens pressureThreshold SKAL MÅLES OG RETTES EFTER
 
         // (Eventuelt et objekt til at snakke med hardwaren)
@@ -79,7 +86,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
             _lastTickTime = currentTime;
 
             // Hent data (Fakes her indtil hardware er sat til)
-            int[,] currentMatrix = new int[4, 4]; // Her kalder vi normalt _sensor.ReadMatrix(); 
+            int[,] currentMatrix = new int[4, 4]; // Her kalder vi normalt _sensor.ReadMatrix(); Altså int[,] currentMatrix = _sensor.ReadMatrix();
 
             bool anyBucketCritical = false;
 
@@ -91,7 +98,15 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
                     break;
 
                 case SystemStateEnum.Kalibrering:
-                    // Gem referenceværdier 
+                    // Her er der ingen vægt på velostat. Gem referenceværdier for hvert punkt
+                    for (int r = 0; r < 4; r++)
+                    {
+                        for (int c = 0; c < 4; c++)
+                        {
+                            //sikrer at vi aldrig gemmer 0 (for man må ikke dividere med 0 senere) det sidste del af koden er en nem if/else
+                            _referenceMatrix[r,c] = currentMatrix[r,c] == 0 ? 1.0 : currentMatrix[r,c];
+                        }
+                    }
                     CurrentState = SystemStateEnum.Monitorering;
                     break;
 
@@ -104,12 +119,18 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
                         for (int c = 0; c < 4; c++)
                         {
                             double pressure = currentMatrix[r, c];
+                            double reference = _referenceMatrix[r, c];
+                            //Nyt fra HW, er at vi skal måle procentvis forskel, derfor:
+                            //Formel ((NytTal - GammeltTal) / GammeltTal) * 100
+                            double pressureRatio = ((pressure - reference) / reference) * 100.0;
+                            // Hvis trykket er faldet under kalibreringen (pga. hardware støj eller andet), sætter vi det til 0
+                            if (pressureRatio < 0.0) pressure = 0;
 
                             // Fjern støj
-                            if (pressure < NOISE_FLOOR) pressure = 0;
+                            if (pressureRatio < NOISE_FLOOR) pressureRatio = 0;
 
                             // Hæld i spanden
-                            _buckets[r, c] += (pressure * deltaTime);
+                            _buckets[r, c] += (pressureRatio * deltaTime);
 
                             // Siv ud af spanden
                             _buckets[r, c] -= (DECAY_CONSTANT * deltaTime);
