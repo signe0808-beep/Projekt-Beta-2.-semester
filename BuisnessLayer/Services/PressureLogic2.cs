@@ -57,13 +57,14 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
         private const int NOISE_FLOOR = 15;            // Makkerens pressureThreshold SKAL MÅLES OG RETTES EFTER
 
         // (Eventuelt et objekt til at snakke med hardwaren)
-        // private ISensorReader _sensor; 
+        private ISensorReader _sensor; 
 
-        public PressureLogic2()
+        public PressureLogic2(ISensorReader sensor)
         {
             // Starter vores loop, der kører fx hvert 100 millisekund
             _tickTimer = new System.Timers.Timer(100);
             _tickTimer.Elapsed += OnTimerElapsed; //seperat metode til timer
+            _sensor = sensor;
         }
 
         private void OnTimerElapsed(object? sender, ElapsedEventArgs e)
@@ -118,13 +119,13 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
                     {
                         for (int c = 0; c < 4; c++)
                         {
-                            double pressure = currentMatrix[r, c];
+                            double rawPressure = currentMatrix[r, c];
                             double reference = _referenceMatrix[r, c];
                             //Nyt fra HW, er at vi skal måle procentvis forskel, derfor:
                             //Formel ((NytTal - GammeltTal) / GammeltTal) * 100
-                            double pressureRatio = ((pressure - reference) / reference) * 100.0;
+                            double pressureRatio = ((rawPressure - reference) / reference) * 100.0;
                             // Hvis trykket er faldet under kalibreringen (pga. hardware støj eller andet), sætter vi det til 0
-                            if (pressureRatio < 0.0) pressure = 0;
+                            if (pressureRatio < 0.0) rawPressure = 0;
 
                             // Fjern støj
                             if (pressureRatio < NOISE_FLOOR) pressureRatio = 0;
@@ -159,6 +160,11 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
                     }
                     break;
             }
+        }
+        //Returnere de private spande så skærmen kan læse dem
+        public double[,] GetBuckets()
+        {
+            return _buckets;
         }
 
     }

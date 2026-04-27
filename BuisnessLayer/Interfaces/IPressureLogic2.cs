@@ -13,5 +13,6 @@ namespace TESTAvaloniaApplication.BusinessLayer.Interfaces
 
         void RunStateMachineTick(); //Kaldes ved hvert tick fra state maskinen
         void StartSystem(); //start af systemet
+        double[,] GetBuckets(); //Gør det muligt for skærm at hente punkterne
     }
 }
