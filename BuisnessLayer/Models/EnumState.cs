@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Controls.Shapes;
+//using Avalonia.Controls.Shapes;
 using TESTAvaloniaApplication.BusinessLayer.Services;
 using System.Threading; //giver mulighed for at bruge thread.SLeep (pause i loop)
 
@@ -15,9 +15,9 @@ namespace TESTAvaloniaApplication.BusinessLayer.Models
         Initialisering,
         Kalibrering,
         Monitorering,
-        AlarmAktiv
+        Alarm
     }
-   
+   /*
     //tænker dette skal flyttes, jeg har sat det meste ind et andet sted:)
     class Program //her skal selve state maskinen styres 
     {
@@ -82,5 +82,5 @@ namespace TESTAvaloniaApplication.BusinessLayer.Models
                 Thread.Sleep(500); //skaber en pause på 0.5 sekunder, hvilket forhindre RPI'en i at køre på maks konsant
             }
         }
-    }
+    }*/
 }

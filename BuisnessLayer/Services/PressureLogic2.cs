@@ -112,7 +112,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
                     break;
 
                 case SystemStateEnum.Monitorering:
-                case SystemStateEnum.AlarmAktiv:
+                case SystemStateEnum.Alarm:
 
                     // Løb gennem alle 16 punkter på måtten
                     for (int r = 0; r < 4; r++)
@@ -151,7 +151,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
                     // Skift tilstand baseret på spandene
                     if (anyBucketCritical)
                     {
-                        CurrentState = SystemStateEnum.AlarmAktiv;
+                        CurrentState = SystemStateEnum.Alarm;
                     }
                     else
                     {
@@ -161,7 +161,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
                     break;
             }
         }
-        //Returnere de private spande så skærmen kan læse dem
+        //Returnerer de private spande så skærmen kan læse dem
         public double[,] GetBuckets()
         {
             return _buckets;

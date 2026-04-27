@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Avalonia.Controls.Shapes;
-using static TESTAvaloniaApplication.BusinessLayer.Interfaces.IStateMachine; //gør det muligt at implementerer Interfaces
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading;
+//using System.Threading.Tasks;
+//using Avalonia.Controls.Shapes;
+//using static TESTAvaloniaApplication.BusinessLayer.Interfaces.IStateMachine; //gør det muligt at implementerer Interfaces
 
 /*
 namespace TESTAvaloniaApplication.BusinessLayer.Services
@@ -77,4 +77,4 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
             }
         
     }
-} *\
+} */
