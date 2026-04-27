@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TESTAvaloniaApplication.DataLayer.Simulators
 {
-    internal class TestSimulator
+    public class TestSimulator
     {
         private int _step = 0;
 
