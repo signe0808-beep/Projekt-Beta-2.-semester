@@ -8,6 +8,7 @@ namespace DataAccess.Interfaces
 {
     public interface ISensorReader
     {
+        //Hardwaren skal aflevere de 16 punkt-værdier.
         int[,] ReadMatrix();
     }
 }

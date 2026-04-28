@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Timers;
 using TESTAvaloniaApplication.BusinessLayer.Interfaces;
 using TESTAvaloniaApplication.BusinessLayer.Models;
+using DataAccess.Interfaces;
  //gør det muligt at implementerer Interfaces
 
 
@@ -54,7 +55,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
        //dette betyder at punktet skal ændres med 5000% for alarm
         private const double ALARM_THRESHOLD = 5000.0;  // Grænsen for alarm (timeThreshold) SKAL HELT SIKKERT OGSÅ RETTES
        //dette tal betyder nu at punktet skal ændre modstand med mindst 15%
-        private const int NOISE_FLOOR = 15;            // Makkerens pressureThreshold SKAL MÅLES OG RETTES EFTER
+        private const int NOISE_FLOOR = 15;            // pressureThreshold SKAL MÅLES OG RETTES EFTER
 
         // (Eventuelt et objekt til at snakke med hardwaren)
         private ISensorReader _sensor; 
@@ -160,6 +161,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
                     }
                     break;
             }
+            System.Diagnostics.Debug.WriteLine($"Spand (1,1) værdi: {currentMatrix[1, 1]} | Nuværende State: {CurrentState}");
         }
         //Returnerer de private spande så skærmen kan læse dem
         public double[,] GetBuckets()

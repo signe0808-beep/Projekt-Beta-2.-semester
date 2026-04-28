@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TESTAvaloniaApplication.DataLayer.Simulators
+namespace TESTAvaloniaApplication.DataAccess.Simulators
 {
     // Vi skriver under på kontrakten med ": ISensorReader"
     public class TestSimulator : ISensorReader

@@ -1,21 +1,24 @@
 ﻿using TESTAvaloniaApplication.BusinessLayer.Services;
-using TESTAvaloniaApplication.DataLayer.Simulators;
+using TESTAvaloniaApplication.DataAccess.Simulators;
+using TESTAvaloniaApplication.BusinessLayer.Interfaces;
 
 namespace TESTAvaloniaApplication.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
         // Dette er constructoren. Den kører, når skærmen åbner.
+        // 1. Opret variablen HERUDE, så den overlever!
+        private PressureLogic2 _minMotor;
+
         public MainWindowViewModel()
         {
-            // 1. Opret den falske sensor
             var minFalskeSensor = new TestSimulator();
 
-            // 2. Skub den ind i motoren
-            var minMotor = new PressureLogic2(minFalskeSensor);
+            // 2. Gem motoren i vores nye, sikre variabel (fjern ordet 'var')
+            _minMotor = new PressureLogic2(minFalskeSensor);
 
-            // 3. Start systemet!
-            minMotor.StartSystem();
+            // 3. Start motoren
+            _minMotor.StartSystem();
         }
     }
 }
