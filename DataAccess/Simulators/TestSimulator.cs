@@ -18,7 +18,7 @@ namespace TESTAvaloniaApplication.DataAccess.Simulators
             int[,] matrix = new int[4, 4];
             _counter++;
 
-            // 1. Fyld stolen med "tom" støj (ca. 1000 ohm)
+            // 1. Fyld stolen med "tom" støj (ca. 1000 ohm) overalt
             for (int r = 0; r < 4; r++)
             {
                 for (int c = 0; c < 4; c++)
@@ -27,8 +27,19 @@ namespace TESTAvaloniaApplication.DataAccess.Simulators
                 }
             }
 
-            // 2. Simuler at trykket stiger langsomt på ét punkt
-            matrix[1, 1] = 1000 + (_counter * 50);
+            // 2. Skab en cyklus der går fra 0 til 99, og så starter forfra
+            int cyklus = _counter % 100;
+
+            if (cyklus < 50)
+            {
+                // De første 50 omgange: Vægten stiger og stiger på punkt (1,1)
+                matrix[1, 1] = 1000 + (cyklus * 80);
+            }
+            else
+            {
+                // De næste 50 omgange: Personen har rejst sig! (Kun støj tilbage)
+                matrix[1, 1] = 1000;
+            }
 
             return matrix;
         }

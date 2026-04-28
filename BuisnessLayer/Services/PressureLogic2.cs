@@ -51,11 +51,11 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
         //KONSTANTER
 
         //Hvor hurtigt spand tømmes, her med 100% i sekundet
-        private const double DECAY_CONSTANT = 100.0;     // Hvor meget der siver ud af spanden pr. sek SKAL EVT RETTES, DETTE ER TILFÆLDIGT TAL
+        private const double DECAY_CONSTANT = 20.0;     // Hvor meget der siver ud af spanden pr. sek SKAL EVT RETTES, DETTE ER TILFÆLDIGT TAL
        //dette betyder at punktet skal ændres med 5000% for alarm
-        private const double ALARM_THRESHOLD = 5000.0;  // Grænsen for alarm (timeThreshold) SKAL HELT SIKKERT OGSÅ RETTES
+        private const double ALARM_THRESHOLD = 300.0;  // Grænsen for alarm (timeThreshold) SKAL HELT SIKKERT OGSÅ RETTES
        //dette tal betyder nu at punktet skal ændre modstand med mindst 15%
-        private const int NOISE_FLOOR = 15;            // pressureThreshold SKAL MÅLES OG RETTES EFTER
+        private const int NOISE_FLOOR = 10;            // pressureThreshold SKAL MÅLES OG RETTES EFTER
 
         // (Eventuelt et objekt til at snakke med hardwaren)
         private ISensorReader _sensor; 
@@ -161,7 +161,8 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
                     }
                     break;
             }
-            System.Diagnostics.Debug.WriteLine($"Spand (1,1) værdi: {currentMatrix[1, 1]} | Nuværende State: {CurrentState}");
+            // Skift 'DinSpandVariabelHer' ud med det navn, din Leaky Bucket værdi har i koden
+            System.Diagnostics.Debug.WriteLine($"Vandhane (Rå-data): {currentMatrix[1, 1]} | Spand (Procent): {_buckets[1,1]} | State: {CurrentState}");
         }
         //Returnerer de private spande så skærmen kan læse dem
         public double[,] GetBuckets()
