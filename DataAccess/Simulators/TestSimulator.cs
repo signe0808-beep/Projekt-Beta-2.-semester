@@ -43,5 +43,7 @@ namespace TESTAvaloniaApplication.DataAccess.Simulators
 
             return matrix;
         }
+        //2. test kunne bestå af en hel kolonne der også skal tælle op og ned som den ovenover gør, tilføj en cyklus mere der ikke har 0 tryk, men måske halvdelen af det originale tryk.
+        //3.
     }
 }
