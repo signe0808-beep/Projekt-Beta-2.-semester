@@ -1,5 +1,8 @@
 ﻿using Avalonia;
 using System;
+using System.Security.Claims;
+using TESTAvaloniaApplication.DataAccess.Simulators;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TESTAvaloniaApplication
 {
@@ -20,4 +23,19 @@ namespace TESTAvaloniaApplication
                 .LogToTrace();
 
     }
+   
 }
+/*
+Main() {
+
+    ts = new TestSimulator();
+    pl = new PressureLogic(ts);
+
+    pl.RunStateMachineTick();
+
+    if (pl.CurrentSTate == Alarm)
+        WriteLine(Test1 gik godt)
+    else
+        WriteLine(Test1 eksploderede)
+}
+*/
