@@ -1,6 +1,6 @@
 ﻿namespace TestProject1
 {
-    public class Tests
+    public class Test_af_State_Machine
     {
         [SetUp]
         public void Setup()
