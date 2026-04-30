@@ -27,4 +27,10 @@
   <ItemGroup>
     <ProjectReference Include="..\BuisnessLayer\BusinessLayer.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\HeatmapView.axaml.cs">
+      <DependentUpon>HeatmapView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>
