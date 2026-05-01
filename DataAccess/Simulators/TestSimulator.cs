@@ -33,7 +33,7 @@ namespace TESTAvaloniaApplication.DataAccess.Simulators
             if (cyklus < 50)
             {
                 // De første 50 omgange: Vægten stiger og stiger på punkt (1,1)
-                matrix[1, 1] = 1000 + (cyklus * 80);
+                matrix[1, 1] = 1000 - (cyklus * 80);
             }
             else
             {

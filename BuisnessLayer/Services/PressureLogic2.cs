@@ -124,7 +124,9 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
                             double reference = _referenceMatrix[r, c];
                             //Nyt fra HW, er at vi skal måle procentvis forskel, derfor:
                             //Formel ((NytTal - GammeltTal) / GammeltTal) * 100
-                            double pressureRatio = ((rawPressure - reference) / reference) * 100.0;
+                            //eftersom et lille tal giver hæjt tryk har jeg blot vendt formlen om:
+                            //((GammeltTal-Nyttal)/GammeltTakl)*100
+                            double pressureRatio = ((reference- rawPressure) / reference) * 100.0;
                             // Hvis trykket er faldet under kalibreringen (pga. hardware støj eller andet), sætter vi det til 0
                             if (pressureRatio < 0.0) rawPressure = 0;
 
