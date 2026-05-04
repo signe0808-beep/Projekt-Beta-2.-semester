@@ -35,7 +35,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
  denne Delta Time. Hvis hardwaren oplever lag, udlignes dette matematisk, så den samlede 
  procentsats altid passer med det faktiske antal sekunder, borgeren har siddet på måtten. 
  */
-    public class PressureLogic2:IPressureLogic2 //- mangler referance??
+    public class PressureLogic2 : IPressureLogic2
     {
         //Systemets tilstand
         public SystemStateEnum CurrentState { get; private set; } = SystemStateEnum.Initialisering;
@@ -78,6 +78,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
             _lastTickTime = DateTime.Now;
             _tickTimer.Start();
         }
+       
 
         // SELVE STATE MACHINEN OG LOGIKKEN (skal stå her splittet op i stedet for at være samlet)
         public void RunStateMachineTick()
@@ -86,7 +87,14 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
             var currentTime = DateTime.Now;
             double deltaTime = (currentTime - _lastTickTime).TotalSeconds;
             _lastTickTime = currentTime;
-
+            ExecuteTick(deltaTime);
+        }
+        public void RunStateMachineTick(double deltatime)
+        {
+            ExecuteTick(deltatime);
+        }
+        private void ExecuteTick(double deltaTime)
+        {
             // Hent data (Fakes her indtil hardware er sat til)
             int[,] currentMatrix = _sensor.ReadMatrix(); // Her kalder vi normalt _sensor.ReadMatrix(); Altså int[,] currentMatrix = _sensor.ReadMatrix();
 

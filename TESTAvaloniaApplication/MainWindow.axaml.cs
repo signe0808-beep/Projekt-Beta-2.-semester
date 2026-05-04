@@ -1,5 +1,7 @@
 using Avalonia.Controls;
 using Presentation.ViewModels;
+using TESTAvaloniaApplication.BusinessLayer.Services;
+using TESTAvaloniaApplication.DataAccess.Simulators;
 
 namespace Presentation
 {
@@ -9,12 +11,10 @@ namespace Presentation
         {
             InitializeComponent();
 
-            //opretter en sensor
-            var sensor = new FakeSensor(); //skiftes til den rigtige hardware sensor
-            var logic = new PressureLogic2(sensor); //opretter statemachine kalder fra businesslayer
-            logic.StartSystem(); //starter system kalder fra businesslayer
+            var sensor = new TestSimulator();
+            var logic = new PressureLogic2(sensor);
+            logic.StartSystem();
 
-            //binder UI til ViewModel som indeholder data og logik til heatmap
             DataContext = new HeatmapViewModel(logic);
         }
     }
