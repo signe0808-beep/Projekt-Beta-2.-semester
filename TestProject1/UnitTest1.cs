@@ -32,7 +32,7 @@ class FixedSensor : ISensorReader
 {
     private readonly int[,] _matrix;
     public FixedSensor(int[,] matrix) => _matrix = matrix;
-    public int[,] ReadMatrix() => (int[,])_matrix.Clone();
+    public int[,] ReadMatrix() => (int[,])_matrix.Clone(); //der bliver skabt en klon, så den orignale matrix ikke bliver ændret
 }
 
 // MUTABLE SENSOR: Returnerer den matrix der ligger i Matrix-variablen.
@@ -48,11 +48,9 @@ class MutableSensor : ISensorReader
 
 public class Tests
 {
-    // =========================================================================
-    // HJÆLPEMETODER til at bygge testmatrixer
-    // =========================================================================
-
-    // Tom måtte — alle 16 punkter har værdien 1000 (ingen belastning)
+    
+    // Tom måtte — alle 16 punkter har værdien 1000 (ingen belastning). Det er den her der køres først.
+    //Det er også den her matrix der sendes rundt, når der skal testes at det virker
     private static int[,] Baseline()
     {
         var m = new int[4, 4];
