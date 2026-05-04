@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Data.Converters;
-using System.Drawing;
+using Avalonia.Media;
 
 namespace Presentation.Converters
 {
@@ -18,7 +18,9 @@ namespace Presentation.Converters
         //convert-metoden modtager en bucket‑værdien fra ViewModel, sammenligner med alarmgrænsen, hvorefter den returnerer rødt eller gråt felt til UI
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double bucketValue = (double)value;
+            // Sikrer at value er en double (undgår crash ved null eller forkert type)
+            if (value is not double bucketValue)
+                return Brushes.LightGray;
 
             //hvis alarmen er gået bliver feltet rødt
             if (bucketValue >= ALARM_THRESHOLD)

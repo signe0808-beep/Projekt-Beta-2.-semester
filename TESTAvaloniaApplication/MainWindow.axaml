@@ -3,9 +3,9 @@
         xmlns:vm="using:TESTAvaloniaApplication.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="using:Presentation"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Presentation.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
         Title="TESTAvaloniaApplication"
         Width="800"
@@ -20,21 +20,17 @@
 
     <Grid ColumnDefinitions="*,250">
 
-    <Border Grid.Column="0" Margin="20" Background="#2d2d2d" CornerRadius="10">
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <TextBlock Text="[ Varmekort her ]"
-                       Foreground="Gray"
-                       FontSize="24"
-                       HorizontalAlignment="Center"/>
-            </StackPanel>
-        </Border>
+  <Border Grid.Column="0" Margin="20" Background="#2d2d2d" CornerRadius="10">
+    <views:HeatmapView x:Name="Heatmap"/>
+</Border>
         <StackPanel Grid.Column="1" Margin="20" Spacing="70" VerticalAlignment="Center">
 			<TextBlock Text="Status: Normal"
                        Foreground="#4CAF50"
                        FontSize="26"
                        FontWeight="Bold"
                        HorizontalAlignment="Center"/>
-            <Button Content="Kalibrer System"
+            <Button x:Name="KalibrerButton"
+                    Content="Kalibrer System"
                     Width="200"
                     Height="70"
                     FontSize="20"

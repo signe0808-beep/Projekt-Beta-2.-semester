@@ -32,7 +32,7 @@ namespace Presentation.ViewModels
         public double[,] Buckets => _logic.GetBuckets();
 
         //opretter metode der konverter matrix til en liste så Avalonia forstår vores heatmap
-        public List<double> BucketList => Flattern(_logic.GetBuckets());
+        public List<double> BucketList => Flatten(_logic.GetBuckets());
 
         //constructor
         public HeatmapViewModel(PressureLogic2 logic)
@@ -53,7 +53,7 @@ namespace Presentation.ViewModels
         }
 
         //metoden
-        private List<double> Flattern(double[,] matrix)
+        private List<double> Flatten(double[,] matrix)
         {
             var list = new List<double>();
             for (int r = 0; r < 4; r++)

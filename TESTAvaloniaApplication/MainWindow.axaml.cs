@@ -7,15 +7,24 @@ namespace Presentation
 {
     public partial class MainWindow : Window
     {
+        private PressureLogic2 _logic;
         public MainWindow()
         {
             InitializeComponent();
 
             var sensor = new TestSimulator();
-            var logic = new PressureLogic2(sensor);
-            logic.StartSystem();
+            _logic = new PressureLogic2(sensor);
 
-            DataContext = new HeatmapViewModel(logic);
+
+
+            Heatmap.DataContext = new HeatmapViewModel(_logic);
+
+            KalibrerButton.Click += KalibrerButton_Click;
+        }
+
+        private void KalibrerButton_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)  // Starter state machine og målinger når man trykker på kalibrer system knappen
+        {
+            _logic.StartSystem();
         }
     }
 }

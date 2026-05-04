@@ -42,15 +42,25 @@ namespace TESTAvaloniaApplication.DataAccess.Simulators
             if (cyklus < 50)
             {
                 // Første halvdel (ticks 0-49): personen sætter sig og trykket stiger.
-                // Punkt (1,1) stiger med 80 per tick — fra 1000 op til 4920.
-                // Dette simulerer stigende belastning på ét punkt.
-                matrix[1, 1] = 1000 + (cyklus * 80);
+                // Første halvdel: personen sætter sig, og trykket stiger
+                // Råværdien falder hurtigt fra 1000 ned mod 200
+                // Lavere råværdi svarer til højere tryk i systemet
+                // Dette giver en stigende belastning på punkt (1,1)
+                
+                matrix[1, 1] = Math.Max(200, 1000 - (cyklus * 200));   // Punkt (1,1): falder hurtigt fra 1000 ned mod 200
+
+                //Laver et andet punkt
+                matrix[2, 2] = Math.Max(300, 1100 - (cyklus * 150));   // Punkt (2,2): starter ved 1100 og falder ned mod 300
+
+                matrix[1, 3] = Math.Max(300, 1100 - (cyklus * 80));  // Punkt (1,3): starter ved 1100 og falder langsommere ned mod 300
             }
             else
             {
                 // Anden halvdel (ticks 50-99): personen har rejst sig.
                 // Punkt (1,1) falder tilbage til baseline (1000) — kun støj tilbage.
                 matrix[1, 1] = 1000;
+                matrix[2, 2] = 1100;
+                matrix[1, 3] = 1100;
             }
 
             return matrix;
