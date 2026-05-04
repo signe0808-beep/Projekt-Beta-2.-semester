@@ -2,5 +2,8 @@
   <Project Path="BuisnessLayer/BusinessLayer.csproj" Id="3e5b7fab-3a46-451f-80cf-484a722c62df" />
   <Project Path="DataAccess/DataAccess.csproj" Id="529b3243-0294-44b0-92cd-e7c08e5ec283" />
   <Project Path="TESTAvaloniaApplication/Presentation.csproj" />
-  <Project Path="TestProject1/TestProject1.csproj" Id="6e29a2bc-58d5-4c02-ad81-176e67ce4c31" />
+  <Project Path="TestProject1/TestProject1.csproj" Id="6e29a2bc-58d5-4c02-ad81-176e67ce4c31">
+    <BuildDependency Project="BuisnessLayer/BusinessLayer.csproj" />
+    <BuildDependency Project="DataAccess/DataAccess.csproj" />
+  </Project>
 </Solution>

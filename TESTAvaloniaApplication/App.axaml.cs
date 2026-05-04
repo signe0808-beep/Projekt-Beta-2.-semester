@@ -5,7 +5,7 @@ using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using System.Linq;
 using TESTAvaloniaApplication.ViewModels;
-using TESTAvaloniaApplication.Views;
+using Presentation;
 
 namespace TESTAvaloniaApplication
 {
