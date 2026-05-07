@@ -63,6 +63,11 @@ namespace BusinessLayer.Services
 
         }
 
+        public void RunStateMachineTick(double deltaTime)
+        {
+            ExecuteTick(deltaTime); // testen kalder ExecuteTick via denne
+        }
+
         //udløses automatisk hver gang timeren "ticks"
         private void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
@@ -77,6 +82,7 @@ namespace BusinessLayer.Services
             //Kører selve logikken med den udregnede tid
             ExecuteTick(deltaTime);
         }
+      
         private void ExecuteTick(double deltaTime)
         {
             //Henter data fra matrixen via vores hardware

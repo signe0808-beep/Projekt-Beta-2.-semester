@@ -1,19 +1,19 @@
 using Avalonia.Controls;
 using Presentation.ViewModels;
-using TESTAvaloniaApplication.BusinessLayer.Services;
+using BusinessLayer.Services;
 using TESTAvaloniaApplication.DataAccess.Simulators;
 
 namespace Presentation
 {
     public partial class MainWindow : Window
     {
-        private PressureLogic2 _logic;
+        private PressureMonitor _logic;
         public MainWindow()
         {
             InitializeComponent();
 
             var sensor = new TestSimulator();
-            _logic = new PressureLogic2(sensor);
+            _logic = new PressureMonitor(sensor);
 
 
 

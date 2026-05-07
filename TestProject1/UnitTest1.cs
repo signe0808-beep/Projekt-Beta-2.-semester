@@ -1,6 +1,6 @@
 ﻿using DataAccess.Interfaces;
-using TESTAvaloniaApplication.BusinessLayer.Services;
 using TESTAvaloniaApplication.BusinessLayer.Models;
+using BusinessLayer.Services;
 
 namespace TestProject1;
 class FakeSensor : ISensorReader //Opretter en fake sensor klasse, som implementere ISensorReader,
@@ -29,7 +29,7 @@ public class Tests
     Alarm_Udloeses_Ved_Vedvarende_Hojt_Tryk() //metode hvor testens navn beskriver hvad den tester
     {
       var sensor = new FakeSensor(TomMåtte()); //variabel der holder fakesensor, hvilket er det der skiftes matrix på undervejs i testen for at simulere forskellige situationer af måtten.
-      var logic = new PressureLogic2(sensor); //her bliver logikken for hvordan pressurelogic fungere, det er state maskine, leaky bucket og afgørelse om der skal være alarm. Logic bruger altså sensor til at hente data ved hvert tick. Sensor levere tal -> logic beregner -> alarm eller ej
+      var logic = new PressureMonitor(sensor); //her bliver logikken for hvordan pressurelogic fungere, det er state maskine, leaky bucket og afgørelse om der skal være alarm. Logic bruger altså sensor til at hente data ved hvert tick. Sensor levere tal -> logic beregner -> alarm eller ej
 
       logic.RunStateMachineTick(0.1); //Her bliver Pressurelogic initialiseret går fra initialisering -> kalibrering
       logic.RunStateMachineTick(0.1); //Tick 2 går fra kalibrering -> monitorering.reference gemmes som 1000. 0.1 er delta time som hjælper systemet med at køre ordentligt.
@@ -48,7 +48,7 @@ public class Tests
     public void Ingen_Alarm_Ved_Stoej_Under_Noise_Floor() //navn på metoden som tester det den hedder. Men i virkeligheden tester den bare at en tom måtte ikke giver alarm. Når vi ved hvor meget støj en rigtig sensor producere kan det testes nærmere.
     {
         var sensor = new FakeSensor(TomMåtte());
-        var logic = new PressureLogic2(sensor); 
+        var logic = new PressureMonitor(sensor);
 
         //sensor matrixen bliver IKKE skiftet til noget, derfor skulle uendelig mængde ticks ikke gøre en forskel. Den er bare på tom måtte. Da måtten forbliver tom skulle den aldrig nogensinde udløse en alarm.
         for (int i = 0; i < 50; i++) //tester at når der bliver kørt et tick 50 gange skulle det ikke udløse en alarm, da den er tom
@@ -63,7 +63,7 @@ public class Tests
       public void System_Vender_Tilbage_Til_Monitorering_Naar_Tryk_Fjernes() //navn forklare hvad testen gør
     {
         var sensor = new FakeSensor(TomMåtte()); 
-        var logic = new PressureLogic2(sensor);
+        var logic = new PressureMonitor(sensor);
 
         logic.RunStateMachineTick(0.1); //Init -> kalibrering
         logic.RunStateMachineTick(0.1); //Kalibrering -> monitorering
@@ -87,7 +87,7 @@ public class Tests
     public void Alarm_Udloeses_Ved_Tryk_Langs_Hel_Kolonne() //navn der fortæller hvad metoden gr
     {
         var sensor = new FakeSensor(TomMåtte());
-        var logic = new PressureLogic2(sensor);
+        var logic = new PressureMonitor(sensor);
 
         logic.RunStateMachineTick(0.1); //Init -> kalibrering
         logic.RunStateMachineTick(0.1); //Kalibrering -> monitorering
