@@ -1,5 +1,4 @@
-﻿/* 
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Timers;
 using TESTAvaloniaApplication.BusinessLayer.Interfaces;
@@ -10,7 +9,7 @@ using DataAccess.Interfaces;
 
 namespace TESTAvaloniaApplication.BusinessLayer.Services
 {
-    
+    /* 
  SYSTEMARKITEKTUR OG BUSINESSLOGIC
   
  Denne klasse er logikken bag tryksystemet. Den skal aflæse rådata fra matrixen (4*4) 
@@ -35,7 +34,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
  Tiden mellem hver måling beregnes præcist i sekunder. Alt påfyldning og aflastning i spandene ganges med 
  denne Delta Time. Hvis hardwaren oplever lag, udlignes dette matematisk, så den samlede 
  procentsats altid passer med det faktiske antal sekunder, borgeren har siddet på måtten. 
- 
+ */
     public class PressureLogic2 : IPressureLogic2
     {
         //Systemets tilstand
@@ -137,7 +136,7 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
                             //((GammeltTal-Nyttal)/GammeltTakl)*100
                             double pressureRatio = ((reference- rawPressure) / reference) * 100.0;
                             // Hvis trykket er faldet under kalibreringen (pga. hardware støj eller andet), sætter vi det til 0
-                            if (pressureRatio < 0.0) rawPressure = 0;
+                            if (pressureRatio < 0.0) pressureRatio = 0;
 
                             // Fjern støj
                             if (pressureRatio < NOISE_FLOOR) pressureRatio = 0;
@@ -182,4 +181,4 @@ namespace TESTAvaloniaApplication.BusinessLayer.Services
         }
 
     }
-}*/
+}
