@@ -11,6 +11,7 @@ namespace Presentation
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowViewModel();
 
             var sensor = new TestSimulator();
             _logic = new PressureMonitor(sensor);

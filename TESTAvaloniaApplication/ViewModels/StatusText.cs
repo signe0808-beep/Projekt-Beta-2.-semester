@@ -44,7 +44,7 @@ namespace Presentation.ViewModels
         private async Task StartSystem()
         {
             //UI opdateres når knappen trykkes
-            StatusText = "Status: Vent 5 sekunder...";
+            StatusText = "Status: Vent...";
 
             //efter 5 sekunder ændres teksten
             await Task.Delay(5000);
