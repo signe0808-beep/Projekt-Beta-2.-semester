@@ -5,6 +5,7 @@ using Avalonia.Threading;
 using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using TESTAvaloniaApplication.DataAccess.Drivers;
 
 namespace TESTAvaloniaApplication.ViewModels
 {
@@ -17,7 +18,7 @@ namespace TESTAvaloniaApplication.ViewModels
 
         public MainWindowViewModel()
         {
-            var minFalskeSensor = new TestSimulator();
+            var minFalskeSensor = new HardwareMatrixReader(); //her skiftes til hardwarematrixReader
             _minMotor = new PressureMonitor(minFalskeSensor);
 
             // Opdaterer StatusText hvert 100ms baseret på systemets tilstand
