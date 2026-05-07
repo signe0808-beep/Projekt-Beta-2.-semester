@@ -25,7 +25,7 @@
     <views:HeatmapView x:Name="Heatmap"/>
 </Border>
         <StackPanel Grid.Column="1" Margin="20" Spacing="70" VerticalAlignment="Center">
-			<TextBlock Text="{Binding StatusText}"
+			<TextBlock Text="{Binding StartCalibrationCommand}"
                        Foreground="#4CAF50"
                        FontSize="26"
                        FontWeight="Bold"
