@@ -31,7 +31,7 @@
                        FontWeight="Bold"
                        HorizontalAlignment="Center"/>
             <Button x:Name="KalibrerButton"
-                    Command ="{Binding StartCalibrationCommand}"
+                    Command ="Kalibrer System"
                     Content="Kalibrer System"
                     Width="200"
                     Height="70"
