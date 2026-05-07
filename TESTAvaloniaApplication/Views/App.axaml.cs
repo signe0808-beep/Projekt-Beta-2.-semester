@@ -7,7 +7,7 @@ using System.Linq;
 using TESTAvaloniaApplication.ViewModels;
 using Presentation;
 
-namespace TESTAvaloniaApplication
+namespace Presentation.Views
 {
     public partial class App : Application
     {

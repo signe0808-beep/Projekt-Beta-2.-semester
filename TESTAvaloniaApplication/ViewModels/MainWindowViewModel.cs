@@ -1,6 +1,5 @@
 ﻿using BusinessLayer.Services;
 using TESTAvaloniaApplication.DataAccess.Simulators;
-using TESTAvaloniaApplication.BusinessLayer.Interfaces;
 
 namespace TESTAvaloniaApplication.ViewModels
 {
@@ -21,4 +20,7 @@ namespace TESTAvaloniaApplication.ViewModels
             _minMotor.StartSystem();
         }
     }
+
+   
+    
 }
