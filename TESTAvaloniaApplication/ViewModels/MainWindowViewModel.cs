@@ -1,6 +1,9 @@
-﻿using TESTAvaloniaApplication.BusinessLayer.Services;
-using TESTAvaloniaApplication.DataAccess.Simulators;
+﻿using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using TESTAvaloniaApplication.BusinessLayer.Interfaces;
+using TESTAvaloniaApplication.BusinessLayer.Services;
+using TESTAvaloniaApplication.DataAccess.Simulators;
 
 namespace TESTAvaloniaApplication.ViewModels
 {
@@ -21,4 +24,7 @@ namespace TESTAvaloniaApplication.ViewModels
             _minMotor.StartSystem();
         }
     }
+
+   
+    
 }

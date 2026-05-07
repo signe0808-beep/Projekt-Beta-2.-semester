@@ -24,12 +24,13 @@
     <views:HeatmapView x:Name="Heatmap"/>
 </Border>
         <StackPanel Grid.Column="1" Margin="20" Spacing="70" VerticalAlignment="Center">
-			<TextBlock Text="Status: Normal"
+			<TextBlock Text="{Binding StatusText}"
                        Foreground="#4CAF50"
                        FontSize="26"
                        FontWeight="Bold"
                        HorizontalAlignment="Center"/>
             <Button x:Name="KalibrerButton"
+                    Command ="{Binding StartSystem}"
                     Content="Kalibrer System"
                     Width="200"
                     Height="70"

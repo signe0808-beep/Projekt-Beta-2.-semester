@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using Presentation.Views;
 using System;
 using System.Security.Claims;
 using TESTAvaloniaApplication.DataAccess.Simulators;
