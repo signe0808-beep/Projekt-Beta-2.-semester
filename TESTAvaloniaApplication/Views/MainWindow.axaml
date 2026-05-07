@@ -3,7 +3,7 @@
         xmlns:vm="using:TESTAvaloniaApplication.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:views="using:Presentation"
+        xmlns:views="using:Presentation.ViewModels"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Presentation.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
@@ -30,7 +30,7 @@
                        FontWeight="Bold"
                        HorizontalAlignment="Center"/>
             <Button x:Name="KalibrerButton"
-                    Command ="{Binding StartSystem}"
+                    Command ="{Binding StartCalibrationCommand}"
                     Content="Kalibrer System"
                     Width="200"
                     Height="70"
