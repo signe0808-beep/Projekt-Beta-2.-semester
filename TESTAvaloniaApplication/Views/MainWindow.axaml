@@ -27,7 +27,7 @@
         <StackPanel Grid.Column="1" Margin="20" Spacing="70" VerticalAlignment="Center">
 			<TextBlock Text="{Binding StartCalibrationCommand}"
                        Foreground="#4CAF50"
-                       FontSize="26"
+                       FontSize="20"
                        FontWeight="Bold"
                        HorizontalAlignment="Center"/>
             <Button x:Name="KalibrerButton"
