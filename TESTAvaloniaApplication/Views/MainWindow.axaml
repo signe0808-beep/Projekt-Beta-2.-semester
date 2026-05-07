@@ -22,11 +22,11 @@
     <Grid ColumnDefinitions="*,250">
 
   <Border Grid.Column="0" Margin="20" Background="#2d2d2d" CornerRadius="10">
-    <views:HeatmapView x:Name="Heatmap"/>
+    <views:HeatmapView DataContext="{Binding HeatmapData}"/>
 </Border>
         <StackPanel Grid.Column="1" Margin="20" Spacing="70" VerticalAlignment="Center">
 			<TextBlock Text="{Binding StatusText}"
-                       Foreground="#4CAF50"
+                       Foreground="{Binding StatusColor}"
                        FontSize="26"
                        FontWeight="Bold"
                        HorizontalAlignment="Center"/>
