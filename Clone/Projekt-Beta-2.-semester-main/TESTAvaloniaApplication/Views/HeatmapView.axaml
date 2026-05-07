@@ -1,0 +1,50 @@
+﻿<UserControl 
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:conv="using:Presentation.Converters"
+             xmlns:local="clr-namespace:Presentation.Converters"
+             xmlns:views="using:TESTAvaloniaApplication.Presentation.Views"
+             xmlns:vm="using:Presentation.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:HeatmapViewModel"
+             x:Class="Presentation.HeatmapView">
+
+
+    <UserControl.Resources>
+        <!-- converter -->
+        <conv:BucketToColorConverter x:Key="BucketToColorConverter"/>
+        
+
+    </UserControl.Resources>
+
+    <StackPanel>
+
+        <!-- Alarm -->
+        <TextBlock Text="⚠ TRYKALARM"
+                   FontSize="24"
+                   Foreground="Red"
+                   HorizontalAlignment="Center"
+                   IsVisible="{Binding IsAlarm}"/>
+
+        <!-- Heatmap -->
+        <ItemsControl ItemsSource="{Binding Buckets}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="4" Columns="4"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Width="70"
+                            Height="70"
+                            Margin="5"
+                            Background="{Binding Converter={StaticResource BucketToColorConverter}}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+    </StackPanel>
+</UserControl>
