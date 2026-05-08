@@ -9,10 +9,11 @@ using Avalonia.Media;
 
 namespace Presentation.Converters
 {
-    //converter gør feltet rødt, når bucket ≥ ALARM_THRESHOLD
+    //converter gør feltet rødt, når bucket ≥ ALARM_THRESHOLD.
+    //Det er altså et oversætteled  der tager et tal fra bucket værdien og returnere en farve
     public class BucketToColorConverter : IValueConverter
     {
-        //tærskelsvværdi som matcher vores PressureLocig2
+        //tærskelsvværdi som matcher vores PressureLocig, der er alarm hvis et tal rammer 300
         private const double ALARM_THRESHOLD = 300.0;
 
         //convert-metoden modtager en bucket‑værdien fra ViewModel, sammenligner med alarmgrænsen, hvorefter den returnerer rødt eller gråt felt til UI

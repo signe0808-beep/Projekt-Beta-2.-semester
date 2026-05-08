@@ -58,9 +58,21 @@ namespace BusinessLayer.Services
         //Kaldes fra UI, når målingen skal begynde
         public void StartSystem()
         {
-            _lastTickTime = DateTime.Now; //Sætter strattid
+            _lastTickTime = DateTime.Now;
             _tickTimer.Start();
+        }
 
+        //Stopper målingerne midlertidigt
+        public void StopSystem()
+        {
+            _tickTimer.Stop();
+        }
+
+        //Genoptager målingerne uden at kalibrere igen
+        public void ResumeSystem()
+        {
+            _lastTickTime = DateTime.Now; // nulstil så deltaTime ikke giver et stort hop
+            _tickTimer.Start();
         }
 
         public void RunStateMachineTick(double deltaTime)

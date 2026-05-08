@@ -11,7 +11,7 @@ using BusinessLayer.Services;
 
 namespace Presentation.ViewModels
 {
-    //Heatmap henter bucket-værdier fra PressureLogic2 og opdaterer UI automatisk når ALARM_THRESHOLD = 300.0 overskrides
+    //Heatmap henter bucket-værdier fra PressureMonitor og opdaterer UI automatisk når ALARM_THRESHOLD = 300.0 overskrides
     //anvender BucketToColorConverter til at konverter fra en nummerisk værdi til enten rød eller grå farvefelt
     
 
@@ -19,11 +19,12 @@ namespace Presentation.ViewModels
     //INotifyPropertyChanged, er standard‑interfacet som fortæller UI’et at en værdi er ændret og UI skal opdateres
     public class HeatmapViewModel : INotifyPropertyChanged
     {
-        //reference til PressureLogic2 i BusinessLayer, og henter værdi
-        //readonly: værdi sættes i constructor
+        //reference til Pressuremonitor i BusinessLayer, og henter værdi
+        //readonly: værdi sættes i constructor og kan IKKE udskiftes bagefter
         private readonly PressureMonitor _logic;
 
         //et event som hører under INotifyPropertyChanged, minder Ui'et om at en værdi er ændret og UI skal opdatere
+        //Det er en aftale med avalonia der siger at når der bliver kaldt propertyChanged, skal der hente nye værdier. Hvis det ikke stod her, ville ui ikke opdatere sig selv
         public event PropertyChangedEventHandler PropertyChanged;
 
         //property som binder direkte til HeatmapView.axaml under Views
@@ -43,7 +44,7 @@ namespace Presentation.ViewModels
             //UI opdateres hvert 100 ms
             DispatcherTimer.Run(() =>
             {
-                //henter buckets-værdi og opdaterer bindings
+                //siger til Avalonia at BucketList er ændret — Avalonia går selv hen og henter den nye værdi via BucketList propertyen
                 OnPropertyChanged(nameof(Buckets));
                 OnPropertyChanged(nameof(BucketList));
                 //fortsæt med at kører timeren
@@ -52,7 +53,7 @@ namespace Presentation.ViewModels
             TimeSpan.FromMilliseconds(100));
         }
 
-        //metoden
+        //metoden der oversætter matricen til en liste
         private List<double> Flatten(double[,] matrix)
         {
             var list = new List<double>();
@@ -66,9 +67,9 @@ namespace Presentation.ViewModels
             return list;
         }
 
-        //metode
-        //hvis PropertyChanged ikke er null så kaldes dette event
+        //sender besked til Avalonia om at en property er ændret — kun hvis nogen lytter (?.)
         //new PropertyChangedEventArgs fortæller hvilken property der er ændret
+        //det er kommunikationsvejen mellem denne klasse og Avalonia
         private void OnPropertyChanged(string propertyName)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         
@@ -78,7 +79,7 @@ namespace Presentation.ViewModels
 //Sammenhæng med HeatmapView
 //1. HeatmapView.axaml binder til Buckets
 //2. HeatmapViewModel leverer Buckets fra _logic.
-//3. PressureLogic2 opdaterer sine interne buckets, når state machine kører.
+//3. PressureMonitor opdaterer sine interne buckets, når state machine kører.
 //4. DispatcherTimer i ViewModel’en siger hvert 100 ms: “Buckets er ændret.”
 //5. Avalonia henter nye værdier → converteren kører → farverne opdateres.
 //Du får et live‑opdateret varme‑kort, der afspejler din BusinessLayer uden at UI’et kender til sensorer, state machine eller algoritmer.

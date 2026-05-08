@@ -24,15 +24,24 @@
   <Border Grid.Column="0" Margin="20" Background="#2d2d2d" CornerRadius="10">
     <views:HeatmapView DataContext="{Binding HeatmapData}"/>
 </Border>
-        <StackPanel Grid.Column="1" Margin="20" Spacing="70" VerticalAlignment="Center">
-			<TextBlock Text="{Binding StatusText}"
-                       Foreground="{Binding StatusColor}"
-                       FontSize="26"
-                       FontWeight="Bold"
-                       HorizontalAlignment="Center"/>
+        <StackPanel Grid.Column="1" Margin="20" Spacing="30" VerticalAlignment="Center">
+            <StackPanel Spacing="8">
+                <TextBlock Text="Status"
+                           Foreground="White"
+                           FontSize="20"
+                           FontWeight="Bold"
+                           HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding StatusText}"
+                           Foreground="{Binding StatusColor}"
+                           FontSize="22"
+                           FontWeight="Bold"
+                           HorizontalAlignment="Center"
+                           TextWrapping="Wrap"
+                           TextAlignment="Center"/>
+            </StackPanel>
             <Button x:Name="KalibrerButton"
-                    Command="{Binding StartCalibrationCommand}"
-                    Content="Kalibrer System"
+                    Command="{Binding ToggleSystemCommand}"
+                    Content="{Binding KnapTekst}"
                     Width="200"
                     Height="70"
                     FontSize="20"
