@@ -82,3 +82,4 @@ namespace Presentation.ViewModels
 //4. DispatcherTimer i ViewModel’en siger hvert 100 ms: “Buckets er ændret.”
 //5. Avalonia henter nye værdier → converteren kører → farverne opdateres.
 //Du får et live‑opdateret varme‑kort, der afspejler din BusinessLayer uden at UI’et kender til sensorer, state machine eller algoritmer.
+//TEST
