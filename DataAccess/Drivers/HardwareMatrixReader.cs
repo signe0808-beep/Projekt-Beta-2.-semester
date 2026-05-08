@@ -5,10 +5,8 @@ using Iot.Device.Adc; // Her bruger vi Iot.Device.Bindings
 using DataAccess.Interfaces;
 
 //Jeg har downloadet de pakker vi skal bruge for at kunne snakke sammen med RPi og AD converteren
-//Dette er bare lavet med AI, tænkte bare det ville være godt med et udgangspunkt til testen mandag
-//Jeg har ikke selv sat mig 100% ind i det endnu
-//I sletter bare og laver andre ting hvis det er
-//Logikken er det som HW snakkede om, med at tænde strøm for 1 række ad gangen og læse være kolonne.
+
+//Logikken er det som HW snakkede om, med at tænde strøm for 1 række ad gangen og læse hver kolonne.
 namespace TESTAvaloniaApplication.DataAccess.Drivers
 {
     // Implementerer ISensorReader til datalaget
@@ -41,7 +39,7 @@ namespace TESTAvaloniaApplication.DataAccess.Drivers
             var spiConnectionSettings = new SpiConnectionSettings(0, 0)
             {
                 ClockFrequency = 1000000, // 1 MHz skal evt. ændres
-                Mode = SpiMode.Mode0
+                Mode = SpiMode.Mode0 //dette er inbygget enum. 0 betyder at vi indstiller hvornår de skal læse clocksignalet
             };
 
             _spiDevice = SpiDevice.Create(spiConnectionSettings);
