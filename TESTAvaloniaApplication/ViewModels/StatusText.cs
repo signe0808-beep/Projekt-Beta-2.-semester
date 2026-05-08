@@ -50,7 +50,7 @@ namespace Presentation.ViewModels
             await Task.Delay(5000);
 
             //dette er hvad teksetn ændres til efter de 5 sekunder
-            StatusText = "Status: System er klar til brug, venligst sæt dig";
+            StatusText = "Status: System er klar til brug, du kan nu sætte dig";
         }
 
         //event som bruges af INotifyPropertyChanged, opdatering når der sker ændring
