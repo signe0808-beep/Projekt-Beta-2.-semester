@@ -1,6 +1,7 @@
 using BusinessLayer.Services;
 using TESTAvaloniaApplication.DataAccess.Simulators;
 using TESTAvaloniaApplication.BusinessLayer.Models;
+using TESTAvaloniaApplication.BusinessLayer.Interfaces;
 using Avalonia.Threading;
 using System;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -11,7 +12,7 @@ namespace TESTAvaloniaApplication.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
-        private PressureMonitor _minMotor;
+        private IPressureMonitor _minMotor;
 
         private bool _systemStartet = false;
         private bool _isKalibreret = false;
@@ -29,10 +30,10 @@ namespace TESTAvaloniaApplication.ViewModels
 
         public HeatmapViewModel HeatmapData { get; }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IPressureMonitor motor)
         {
-            var minFalskeSensor = new TestSimulator();
-            _minMotor = new PressureMonitor(minFalskeSensor);
+            _minMotor = motor;
+
             HeatmapData = new HeatmapViewModel(_minMotor);
 
             DispatcherTimer.Run(() =>

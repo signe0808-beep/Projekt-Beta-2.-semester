@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using BusinessLayer.Services;
+using TESTAvaloniaApplication.BusinessLayer.Interfaces;
+
 
 namespace Presentation.ViewModels
 {
@@ -21,7 +23,7 @@ namespace Presentation.ViewModels
     {
         //reference til Pressuremonitor i BusinessLayer, og henter værdi
         //readonly: værdi sættes i constructor og kan IKKE udskiftes bagefter
-        private readonly PressureMonitor _logic;
+        private readonly IPressureMonitor _logic;
 
         //et event som hører under INotifyPropertyChanged, minder Ui'et om at en værdi er ændret og UI skal opdatere
         //Det er en aftale med avalonia der siger at når der bliver kaldt propertyChanged, skal der hente nye værdier. Hvis det ikke stod her, ville ui ikke opdatere sig selv
@@ -36,7 +38,7 @@ namespace Presentation.ViewModels
         public List<double> BucketList => Flatten(_logic.GetBuckets());
 
         //constructor
-        public HeatmapViewModel(PressureMonitor logic)
+        public HeatmapViewModel(IPressureMonitor logic)
         {
             //gemmer reference
             _logic = logic;

@@ -6,6 +6,11 @@ using Avalonia.Markup.Xaml;
 using System.Linq;
 using TESTAvaloniaApplication.ViewModels;
 using Presentation;
+using DataAccess.Interfaces;
+using TESTAvaloniaApplication.DataAccess.Simulators;
+using BusinessLayer.Services;
+using TESTAvaloniaApplication.BusinessLayer.Interfaces;
+
 
 namespace Presentation.Views
 {
@@ -23,7 +28,19 @@ namespace Presentation.Views
                 // Avoid duplicate validations from both Avalonia and the CommunityToolkit. 
                 // More info: https://docs.avaloniaui.net/docs/guides/development-guides/data-validation#manage-validationplugins
                 DisableAvaloniaDataAnnotationValidation();
-                desktop.MainWindow = new MainWindow();
+
+                //skift herinde til HardwareMatrixReader
+                ISensorReader minSensor = new TestSimulator();
+
+                //bygger forretningslaget:
+                IPressureMonitor minMotor = new PressureMonitor(minSensor);
+                //bygger præsentationslaget;
+                var minViewModel = new MainWindowViewModel(minMotor);
+
+                desktop.MainWindow = new MainWindow()
+                {
+                    DataContext = minViewModel
+                };
             }
 
             base.OnFrameworkInitializationCompleted();

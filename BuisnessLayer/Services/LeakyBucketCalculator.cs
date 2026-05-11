@@ -35,7 +35,7 @@ namespace BusinessLayer.Services
                     double pressureRatio = ((reference - rawPressure) / reference) * 100.0;
 
                     // Hvis trykket er faldet under kalibreringen (pga. hardware støj eller andet), sætter vi det til 0
-                    if (pressureRatio < 0.0) rawPressure = 0;
+                    if (pressureRatio < 0.0) pressureRatio = 0;
 
                     // Fjern støj
                     if (pressureRatio < NOISE_FLOOR) pressureRatio = 0;

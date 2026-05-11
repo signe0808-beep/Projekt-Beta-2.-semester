@@ -8,7 +8,7 @@ namespace Presentation
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
+            
         }
     }
 }
