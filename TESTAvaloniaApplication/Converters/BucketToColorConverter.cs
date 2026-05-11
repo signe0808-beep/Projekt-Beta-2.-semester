@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
+using TESTAvaloniaApplication.BusinessLayer.Models;
+using BusinessLayer.Models;
 
 namespace Presentation.Converters
 {
@@ -13,8 +15,7 @@ namespace Presentation.Converters
     //Det er altså et oversætteled  der tager et tal fra bucket værdien og returnere en farve
     public class BucketToColorConverter : IValueConverter
     {
-        //tærskelsvværdi som matcher vores PressureLocig, der er alarm hvis et tal rammer 300
-        private const double ALARM_THRESHOLD = 300.0;
+        
 
         //convert-metoden modtager en bucket‑værdien fra ViewModel, sammenligner med alarmgrænsen, hvorefter den returnerer rødt eller gråt felt til UI
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -24,7 +25,7 @@ namespace Presentation.Converters
                 return Brushes.LightGray;
 
             //hvis alarmen er gået bliver feltet rødt
-            if (bucketValue >= ALARM_THRESHOLD)
+            if (bucketValue >= SystemConstants.ALARM_THRESHOLD)
                 return Brushes.Red;
 
             //ellers gråt felt
