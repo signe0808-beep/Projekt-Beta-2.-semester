@@ -41,7 +41,7 @@ namespace BusinessLayer.Services
                     _buckets[r, c] += (pressureRatio * deltaTime);
 
                     // Siv ud af spanden
-                    _buckets[r, c] -= (SystemConstants.DECAY_CONSTANT * deltaTime);
+                    _buckets[r, c] -= (_buckets[r,c] * SystemConstants.DECAY_FACTOR * deltaTime);
 
                     // Sørg for at spanden ikke går under 0
                     if (_buckets[r, c] < 0) _buckets[r, c] = 0;
