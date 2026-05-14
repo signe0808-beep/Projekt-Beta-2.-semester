@@ -17,5 +17,9 @@ namespace BusinessLayer.Models
                                                      
         //dette tal betyder nu at punktet skal ændre modstand med mindst x%
         public const int NOISE_FLOOR = 10;            // pressureThreshold SKAL MÅLES OG RETTES EFTER
+
+        public const double CALIBRATION_WEIGHT_MEDIUM = 10000.0; // Fx 10 kg
+
+        public const double CALIBRATION_WEIGHT_HIGH = 30000.0;   // Fx 30 kg
     }
 }
