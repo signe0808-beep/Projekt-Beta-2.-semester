@@ -63,7 +63,7 @@ namespace TESTAvaloniaApplication.ViewModels
                 }
                 else if (_minMotor.CurrentState == SystemStateEnum.Alarm)
                 {
-                    StatusText = "Alarm aktiveret - rejs dig fra siddemåtten";
+                    StatusText = "Alarm aktiveret - ændre siddeposition";
                     StatusColor = "#F44336";
                     KnapTekst = "Stop";
                 }
