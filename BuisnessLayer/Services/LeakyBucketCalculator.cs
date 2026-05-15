@@ -15,8 +15,8 @@ namespace BusinessLayer.Services
         //KONSTANTER
 
     
-
-        public bool proccessData(int[,] currentMatrix, double[,] _referenceMatrix, double deltaTime)
+        //vi modtager den færdig kalibrerede matrix
+        public bool proccessData(double[,] calibratedMatrix, double deltaTime)
         {
             bool anyBucketCritical = false;
             // Løb gennem alle 16 punkter på måtten
@@ -24,23 +24,16 @@ namespace BusinessLayer.Services
             {
                 for (int c = 0; c < 4; c++)
                 {
-                    double rawPressure = currentMatrix[r, c];
-                    double reference = _referenceMatrix[r, c];
-                    
-                    //Vi måler den procentvise forskel. Lille adc-tal = højt tryk:
-                    //((GammeltTal-Nyttal)/GammeltTakl)*100
-                    double pressureRatio = ((reference - rawPressure) / reference) * 100.0;
-
-                    // Hvis trykket er faldet under kalibreringen (pga. hardware støj eller andet), sætter vi det til 0
-                    if (pressureRatio < 0.0) pressureRatio = 0;
+                    //Vi tager værdien direkte fra den kalibrerede matrix   
+                    double pressure = calibratedMatrix[r, c];
 
                     // Fjern støj
-                    if (pressureRatio < SystemConstants.NOISE_FLOOR) pressureRatio = 0;
+                    if (pressure < SystemConstants.NOISE_FLOOR) pressure = 0;
 
                     // Hæld i spanden
-                    _buckets[r, c] += (pressureRatio * deltaTime);
+                    _buckets[r, c] += (pressure * deltaTime);
 
-                    // Siv ud af spanden
+                    //Eksponentiel tømning af spanden
                     _buckets[r, c] -= (_buckets[r,c] * SystemConstants.DECAY_FACTOR * deltaTime);
 
                     // Sørg for at spanden ikke går under 0

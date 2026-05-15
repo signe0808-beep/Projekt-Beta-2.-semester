@@ -111,20 +111,26 @@ namespace BusinessLayer.Services
                 case SystemStateEnum.Kalibrering:
                     //Her skal måtten være tom. Vi gemmer referenceværdier, 
                     //for at kompensere for de naturlige varitioner i sensoren.
-                    _calibrationService.SetBaseline(currentMatrix);
+                    _calibrationService.SetDailyBaseline(currentMatrix);
                     CurrentState = SystemStateEnum.Monitorering;
                 break;
 
                 case SystemStateEnum.Monitorering:
                 case SystemStateEnum.Alarm:
 
-                    //Henter det kalibrerede referenceMatrix
-                    double[,] baseline = _calibrationService.GetBaseline();
+                    //Ny matrix til de kalibrederede værdier
+                    double[,] calibratedMatrix = new double[4, 4];
+                    // Vi kører alle 16 punkter igennem kalibreringen først
 
+                    for (int r = 0; r < 4; r++)
+                    {
+                        for (int c = 0; c < 4; c++)
+                        {
+                            calibratedMatrix[r, c] = _calibrationService.GetCalibratedPressure(r, c, currentMatrix[r, c]);
+                        }
+                    }
 
-                    //Bruger Calculator-klassen til at udregne trykket og ser om "spanden flyder over"
-                    //Returnerer true, hvis trykket er for højt og "spanden flyder over"
-                    bool isAlarm=_leakyBucketCalculator.proccessData(currentMatrix, baseline,deltaTime);
+                    bool isAlarm = _leakyBucketCalculator.proccessData(calibratedMatrix, deltaTime);
 
                     // Skift tilstand baseret på spandenes niveau
                     if (isAlarm)
