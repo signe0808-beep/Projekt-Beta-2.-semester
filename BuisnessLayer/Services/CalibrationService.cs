@@ -1,5 +1,4 @@
 ﻿using BusinessLayer.Models;
-using BusinessLayer.Models;
 using Iot.Device.Card.CreditCardProcessing;
 using System;
 using System.Collections.Generic;
