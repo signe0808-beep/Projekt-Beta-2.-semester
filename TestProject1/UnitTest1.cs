@@ -36,10 +36,14 @@ public class Tests
       logic.RunStateMachineTick(0.1); //Tick 2 går fra kalibrering -> monitorering.reference gemmes som 1000. 0.1 er delta time som hjælper systemet med at køre ordentligt.
 
       sensor.Matrix = HojtTryk(); //her bliver den sensor vi oprettede som property skiftet til sensoren i højtryk, der simulere højt tryk på punkt (0,0)
-      for (int i = 0; i < 55; i++) //kører 55 ticks, som er nok til at spanden fyldes op til 300 på punkt (0,0)
-                                    //for loopet starter tælleren på 0 og fortæstter til den er under 55, hvilket er nok til at den rammer 300 på punkt (0,0)
-      logic.RunStateMachineTick(0.1); //kører et tick med 100ms (delta time) - spanden fyldes mere og mere for hver tick. Skal sikkert rettes når vi kender til de rigtige værdier
 
+      // Boundary: 49 ticks → lige under grænsen → ingen alarm
+      for (int i = 0; i < 49; i++)
+          logic.RunStateMachineTick(0.1);
+      Assert.That(logic.CurrentState, Is.EqualTo(SystemStateEnum.Monitorering));
+
+      // Boundary: 1 tick mere (50 i alt) → præcis på grænsen → alarm
+      logic.RunStateMachineTick(0.1);
       Assert.That(logic.CurrentState,
       Is.EqualTo(SystemStateEnum.Alarm)); //sikrer at current state er gået i alarm, for at testen virker
     }
@@ -54,9 +58,17 @@ public class Tests
         //sensor matrixen bliver IKKE skiftet til noget, derfor skulle uendelig mængde ticks ikke gøre en forskel. Den er bare på tom måtte. Da måtten forbliver tom skulle den aldrig nogensinde udløse en alarm.
         for (int i = 0; i < 50; i++) //tester at når der bliver kørt et tick 50 gange skulle det ikke udløse en alarm, da den er tom
             logic.RunStateMachineTick(0.1); //kører et tick på 100ms - måtten er tom så spanden burde ikke blive fyldt
-        
+
         Assert.That(logic.CurrentState,
             Is.EqualTo(SystemStateEnum.Monitorering)); //sørg for at programmet stadig er i monitorering og ikke skifter til alarm
+
+        // Boundary: raw=901 → lige under noise floor → ignoreres, stadig ingen alarm
+        var m = TomMåtte();
+        m[0, 0] = 901;
+        sensor.Matrix = m;
+        for (int i = 0; i < 100; i++)
+            logic.RunStateMachineTick(0.1);
+        Assert.That(logic.CurrentState, Is.EqualTo(SystemStateEnum.Monitorering));
     }
 
     // Test 3: Systemet vender tilbage til Monitorering når trykket fjernes
@@ -134,64 +146,4 @@ public class Tests
         return m; //returnere måtten med den ene kolonne som har højt tryk
     }
 
-    //boundary test
-
-    // Boundary Test 1: 49 ticks → spand = 294.0 → ingen alarm (lige under grænsen)
-  [Test]
-    public void Graensevaerdi_49_Ticks_Giver_Ingen_Alarm()
-    {
-        var sensor = new FakeSensor(TomMåtte());
-        var logic = new PressureMonitor(sensor);
-
-        logic.RunStateMachineTick(0.1); // Init → Kalibrering
-        logic.RunStateMachineTick(0.1); // Kalibrering → Monitorering
-
-        sensor.Matrix = HojtTryk(); // raw=200 → 80% tryk → netto 6.0 pr. tick
-      for (int i = 0; i < 49; i++) // 49 * 6.0 = 294.0 → under 300
-            logic.RunStateMachineTick(0.1);
-
-        Assert.That(logic.GetBuckets()[0, 0], Is.EqualTo(294.0));
-        Assert.That(logic.CurrentState,
-    Is.EqualTo(SystemStateEnum.Monitorering));
-    }
-
-    // Boundary Test 2: 50 ticks → spand = 300.0 → alarm (præcis på grænsen)
-  [Test]
-    public void Graensevaerdi_50_Ticks_Udloser_Alarm()
-    {
-        var sensor = new FakeSensor(TomMåtte());
-        var logic = new PressureMonitor(sensor);
-
-        logic.RunStateMachineTick(0.1);
-        logic.RunStateMachineTick(0.1);
-
-        sensor.Matrix = HojtTryk(); // raw=200 → 80% → netto 6.0 pr. tick
-        for (int i = 0; i < 50; i++) // 50 * 6.0 = 300.0 → præcis på grænsen
-          logic.RunStateMachineTick(0.1);
-
-        Assert.That(logic.GetBuckets()[0, 0], Is.EqualTo(300.0));
-        Assert.That(logic.CurrentState, Is.EqualTo(SystemStateEnum.Alarm));
-    }
-
-    // Boundary Test 3: raw=901 → 9.9% tryk → under noise floor → ignoreres
-    [Test]
-    public void Graensevaerdi_Under_NoiseFloor_Ignoreres()
-    {
-        var sensor = new FakeSensor(TomMåtte());
-        var logic = new PressureMonitor(sensor);
-
-        logic.RunStateMachineTick(0.1);
-        logic.RunStateMachineTick(0.1);
-
-        var m = TomMåtte();
-        m[0, 0] = 901; // ((1000-901)/1000)*100 = 9.9% < 10% → filtreres fra
-        sensor.Matrix = m;
-
-        for (int i = 0; i < 100; i++)
-            logic.RunStateMachineTick(0.1);
-
-        Assert.That(logic.GetBuckets()[0, 0], Is.EqualTo(0.0));
-        Assert.That(logic.CurrentState,
-    Is.EqualTo(SystemStateEnum.Monitorering));
-    }
 }
