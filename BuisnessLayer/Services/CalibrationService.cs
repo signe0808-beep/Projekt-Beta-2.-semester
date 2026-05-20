@@ -18,26 +18,26 @@ namespace BusinessLayer.Services
         //UDFYLDES TIL KALIBERING 
         private int[,] _calibrationLow = new int[4, 4]
         {
-        { 0, 0, 0, 0,},
-        { 0, 0, 0, 0 },
-        { 0, 0, 0, 0 },
-        { 0, 0, 0, 0 } 
+        { 1, 1, 1, 1,},
+        { 1, 1,1 , 1 },
+        { 1, 1, 1, 1 },
+        { 1, 1, 1, 1 } 
         };
         //UDFYLDES TIL KALIBERING 
         private int[,] _calibrationMedium = new int[4, 4]
        {
-        { 0, 0, 0, 0,},
-        { 0, 0, 0, 0 },
-        { 0, 0, 0, 0 },
-        { 0, 0, 0, 0 }
+        { 50, 52, 51, 55,},
+        { 56, 51,58, 52 },
+        { 52, 52, 49, 51 },
+        { 54, 52, 50, 53 }
        };
         //UDFYLDES TIL KALIBERING 
         private int[,] _calibrationHigh = new int[4, 4]
       {
-        { 0, 0, 0, 0,},
-        { 0, 0, 0, 0 },
-        { 0, 0, 0, 0 },
-        { 0, 0, 0, 0 }
+        { 112, 107, 108, 109,},
+        { 110, 109, 110, 108 },
+        { 111, 112, 110, 109 },
+        { 111, 113, 112, 110 }
       };
 
         public CalibrationService()

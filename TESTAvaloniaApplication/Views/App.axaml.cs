@@ -10,6 +10,7 @@ using DataAccess.Interfaces;
 using TESTAvaloniaApplication.DataAccess.Simulators;
 using BusinessLayer.Services;
 using TESTAvaloniaApplication.BusinessLayer.Interfaces;
+using TESTAvaloniaApplication.DataAccess.Drivers;
 
 
 namespace Presentation.Views
@@ -30,7 +31,7 @@ namespace Presentation.Views
                 DisableAvaloniaDataAnnotationValidation();
 
                 //skift herinde til HardwareMatrixReader
-                ISensorReader minSensor = new TestSimulator();
+                ISensorReader minSensor = new HardwareMatrixReader();
 
                 //bygger forretningslaget:
                 IPressureMonitor minMotor = new PressureMonitor(minSensor);
