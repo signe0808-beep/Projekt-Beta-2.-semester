@@ -23,14 +23,14 @@ namespace TESTAvaloniaApplication.DataAccess.Simulators
             int[,] matrix = new int[4, 4];
             _counter++;
 
-            // TRIN 1: Fyld alle 16 punkter med tilfældig støj (950-1050).
+            // TRIN 1: Fyld alle 16 punkter med tilfældig støj (0-2).
             // Dette simulerer den naturlige variation en rigtig sensor altid vil have,
             // selv når ingen sidder på måtten.
             for (int r = 0; r < 4; r++)
             {
                 for (int c = 0; c < 4; c++)
                 {
-                    matrix[r, c] = _rand.Next(950, 1050);
+                    matrix[r, c] = _rand.Next(0, 3);
                 }
             }
 
@@ -42,25 +42,24 @@ namespace TESTAvaloniaApplication.DataAccess.Simulators
             if (cyklus < 50)
             {
                 // Første halvdel (ticks 0-49): personen sætter sig og trykket stiger.
-                // Første halvdel: personen sætter sig, og trykket stiger
-                // Råværdien falder hurtigt fra 1000 ned mod 200
-                // Lavere råværdi svarer til højere tryk i systemet
+                // Råværdien stiger fra baseline (~1) op mod 150
+                // Højere råværdi svarer til højere tryk i systemet
                 // Dette giver en stigende belastning på punkt (1,1)
-                
-                matrix[1, 1] = Math.Max(200, 1000 - (cyklus * 200));   // Punkt (1,1): falder hurtigt fra 1000 ned mod 200
+
+                matrix[1, 1] = Math.Min(150, 1 + (cyklus * 3));   // Punkt (1,1): stiger hurtigt fra 1 op mod 150
 
                 //Laver et andet punkt
-                matrix[2, 2] = Math.Max(300, 1100 - (cyklus * 150));   // Punkt (2,2): starter ved 1100 og falder ned mod 300
+                matrix[2, 2] = Math.Min(130, 1 + (cyklus * 3));   // Punkt (2,2): starter ved 1 og stiger op mod 130
 
-                matrix[1, 3] = Math.Max(300, 1100 - (cyklus * 80));  // Punkt (1,3): starter ved 1100 og falder langsommere ned mod 300
+                matrix[1, 3] = Math.Min(120, 1 + (cyklus * 2));   // Punkt (1,3): starter ved 1 og stiger langsommere op mod 120
             }
             else
             {
                 // Anden halvdel (ticks 50-99): personen har rejst sig.
-                // Punkt (1,1) falder tilbage til baseline (1000) — kun støj tilbage.
-                matrix[1, 1] = 1000;
-                matrix[2, 2] = 1100;
-                matrix[1, 3] = 1100;
+                // Punkterne falder tilbage til baseline (~1) — kun støj tilbage.
+                matrix[1, 1] = 1;
+                matrix[2, 2] = 1;
+                matrix[1, 3] = 1;
             }
 
             return matrix;

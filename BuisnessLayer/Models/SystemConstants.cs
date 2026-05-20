@@ -10,7 +10,7 @@ namespace BusinessLayer.Models
         //det hele er i procent
     {
         // Hvor meget % der siver ud af spanden pr. sek SKAL EVT RETTES, DETTE ER TILFÆLDIGT TAL
-        public const double DECAY_FACTOR = 0.07;
+        public const double DECAY_FACTOR = 0.02;
                                                         
         //dette betyder at punktet skal ændres med x% for alarm
         public const double ALARM_THRESHOLD = 100.0;  // Grænsen for alarm (timeThreshold) SKAL HELT SIKKERT OGSÅ RETTES
