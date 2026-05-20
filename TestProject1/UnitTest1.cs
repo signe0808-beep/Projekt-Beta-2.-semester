@@ -63,12 +63,19 @@ public class Tests
             Is.EqualTo(SystemStateEnum.Monitorering)); //sørg for at programmet stadig er i monitorering og ikke skifter til alarm
 
         // Boundary: raw=2 → lille signal under noise floor → ignoreres, stadig ingen alarm
-        var m = TomMåtte();
-        m[0, 0] = 2;
-        sensor.Matrix = m;
-        for (int i = 0; i < 100; i++)
+        // Boundary: raw=3 → signal over noise floor → tæller som tryk, men ikke alarm endnu
+       var m2 = TomMåtte();
+        m2[0, 0] = 3; // ADC=3 → ~12g kalibreret tryk > NOISE_FLOOR (10) → tæller
+     sensor.Matrix = m2;
+        for (int i = 0; i < 10; i++)
             logic.RunStateMachineTick(0.1);
-        Assert.That(logic.CurrentState, Is.EqualTo(SystemStateEnum.Monitorering));
+
+        var spande = logic.GetBuckets();
+        Assert.That(spande[0, 0],Is.GreaterThan(0));
+        // spanden fylder op
+        Assert.That(logic.CurrentState,Is.EqualTo(SystemStateEnum.Monitorering)); // men ingen alarm
+
+        //boundary: et signal over noise floor tæller ikke som tryk
     }
 
     // Test 3: Systemet vender tilbage til Monitorering når trykket fjernes
