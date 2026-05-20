@@ -1,16 +1,14 @@
+using System.Linq;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-using System.Linq;
-using TESTAvaloniaApplication.ViewModels;
-using Presentation;
-using DataAccess.Interfaces;
-using TESTAvaloniaApplication.DataAccess.Simulators;
 using BusinessLayer.Services;
+using DataAccess.Interfaces;
 using TESTAvaloniaApplication.BusinessLayer.Interfaces;
 using TESTAvaloniaApplication.DataAccess.Drivers;
+using TESTAvaloniaApplication.DataAccess.Simulators;
+using TESTAvaloniaApplication.ViewModels;
 
 
 namespace Presentation.Views
