@@ -10,13 +10,13 @@ namespace BusinessLayer.Models
         //det hele er i procent
     {
         // Hvor meget % der siver ud af spanden pr. sek SKAL EVT RETTES, DETTE ER TILFÆLDIGT TAL
-        public const double DECAY_FACTOR = 0.02;
+        public const double DECAY_FACTOR = 0.07;
                                                         
         //dette betyder at punktet skal ændres med x% for alarm
-        public const double ALARM_THRESHOLD = 100.0;  // Grænsen for alarm (timeThreshold) SKAL HELT SIKKERT OGSÅ RETTES
+        public const double ALARM_THRESHOLD = 200.0;  // Grænsen for alarm (timeThreshold) SKAL HELT SIKKERT OGSÅ RETTES
                                                      
         //dette tal betyder nu at punktet skal ændre modstand med mindst x%
-        public const int NOISE_FLOOR = 1;            // pressureThreshold SKAL MÅLES OG RETTES EFTER
+        public const int NOISE_FLOOR = 10;            // pressureThreshold SKAL MÅLES OG RETTES EFTER
 
         public const double CALIBRATION_WEIGHT_MEDIUM = 300; // Fx 300g
 
