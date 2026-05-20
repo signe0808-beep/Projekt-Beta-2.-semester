@@ -79,22 +79,22 @@ namespace BusinessLayer.Services
             // Juster dagens måling, så vi fjerner fejlen(offsettet)
             int adjustedADC = rawADC - curve.DailyOffset;
 
-            //hvis der ikke er tryk
-            if (adjustedADC >= curve.ADClow) return 0.0;
+            //hvis der ikke er tryk (ADC er på eller under tom-måtte-baseline)
+            if (adjustedADC <= curve.ADClow) return 0.0;
             // Ligger vægten i den lette halvdel? (Mellem low kg og Medium kg)
-            if (adjustedADC <= curve.ADClow && adjustedADC > curve.ADCmedium)
+            if (adjustedADC > curve.ADClow && adjustedADC <= curve.ADCmedium)
             {
-                double rangeADC = curve.ADClow - curve.ADCmedium;
-                double position = curve.ADClow - adjustedADC;
+                double rangeADC = curve.ADCmedium - curve.ADClow;
+                double position = adjustedADC - curve.ADClow;
 
                 // Ganger brøkdelen med vores valgte medium-vægt fra konstanterne
                 return (position / rangeADC) * SystemConstants.CALIBRATION_WEIGHT_MEDIUM;
             }
-            //Ligger vi i den tunge halvdel? (Mellem Medium kg og High kg
+            //Ligger vi i den tunge halvdel? (Mellem Medium kg og High kg)
             else
             {
-                double rangeADC2 = curve.ADCmedium - curve.ADChigh;
-                double position2 = curve.ADCmedium - adjustedADC;
+                double rangeADC2 = curve.ADChigh - curve.ADCmedium;
+                double position2 = adjustedADC - curve.ADCmedium;
                 // Hvor stort et spring i vægt er der mellem Medium og High? (Fx 30 kg - 10 kg = 20 kg)
                 double weightDifference = SystemConstants.CALIBRATION_WEIGHT_HIGH - SystemConstants.CALIBRATION_WEIGHT_MEDIUM;
                 // Vi starter på medium-vægten og lægger brøkdelen af resten oveni
