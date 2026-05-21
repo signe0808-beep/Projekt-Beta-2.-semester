@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//disse værdier er sat ud fra en person der vejer 80-90kg
 namespace BusinessLayer.Models
-{
+{ 
     public class SystemConstants
-        //det hele er i procent
     {
-        // Hvor meget % der siver ud af spanden pr. sek SKAL EVT RETTES, DETTE ER TILFÆLDIGT TAL
+        // Hvor meget % der siver ud af spandene (punkterne) pr. sek 
         public const double DECAY_FACTOR = 0.08;
                                                         
         //dette betyder at punktet skal ændres med x% for alarm

@@ -12,18 +12,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace BusinessLayer.Services
 {
-    /* MEASUREMENT CONTROLLER
-    Denne klasse binder hele vores forretningslogik sammen. Den regner ikke selv på tryksår, 
-    men fungerer som en State Machine, der styrer hvad der sker hvornår.
-    Dens primære opgaver er:
-       1. At styre hvor ofte systemet måler via en asynkron Timer  (10 Hz).
-       2. At hente data fra hardwaren (SensorReader).
-       3. At videresende data til enten kalibrering eller Leaky Bucket-algoritmen 
-          afhængig af systemets aktuelle tilstand.
-    Ved at samle styringen her, overholder vi Single Responsibility-princippet, 
-    så vores matematiske algoritmer kan testes isoleret.
-    */
-    public class PressureMonitor:IPressureMonitor
+    public class PressureMonitor : IPressureMonitor
     {
 
         // Systemets aktuelle tilstand (Initialisering, Kalibrering, Monitorering, Alarm). 
@@ -43,7 +32,7 @@ namespace BusinessLayer.Services
 
         public PressureMonitor(ISensorReader sensor)
         {
-            // Injicerer hardwaren (gør det muligt at bruge TestSimulator fremfor ægte hardware)
+            //Dependency injektion (Gør at programmet er ligeglad med om det data er fra hardware eller testsimulator)
             _sensor = sensor;
 
             // Opretter vores Business Logic Services 
@@ -52,9 +41,10 @@ namespace BusinessLayer.Services
 
             // Starter vores loop, der kører hvert 100. millisekund (10 Hz)
             _tickTimer = new System.Timers.Timer(100);
-            _tickTimer.Elapsed += OnTimerElapsed;
+            _tickTimer.Elapsed += OnTimerElapsed; //Sørger for at OnTimerElapsed lyttes efter og kaldes hver gang timeren udløses
         }
 
+        //følgende 3 bruges i mainWindowViewModel.cs
         //Kaldes fra UI, når målingen skal begynde
         public void StartSystem()
         {
@@ -83,12 +73,8 @@ namespace BusinessLayer.Services
         //udløses automatisk hver gang timeren "ticks"
         private void OnTimerElapsed(object? sender, System.Timers.ElapsedEventArgs e)
         {
-            // DELTA TIME:
-            // For at sikre at algoritmen kører præcist selvom der er forsinkelser i hardwaren, 
-            // beregnes tiden mellem hver måling i sekunder (Δt). Hvis hardwaren oplever lag, 
-            // udlignes dette matematisk, så den samlede procentsats altid passer.
             var currentTime = DateTime.Now;
-            double deltaTime = (currentTime - _lastTickTime).TotalSeconds;
+            double deltaTime = (currentTime - _lastTickTime).TotalSeconds; //sørger for at håndtere evt. forsinkelse
             _lastTickTime = currentTime;
 
             //Kører selve logikken med den udregnede tid

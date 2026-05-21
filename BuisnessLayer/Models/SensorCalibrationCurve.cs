@@ -14,7 +14,7 @@ namespace BusinessLayer.Models
         public int ADCmedium { get; set; }
         public int ADChigh { get; set; }
 
-        // daglige kalibrering med kendt vægt
+        //Offsettet bliver egentligt sat hver gang systemet tændes.
         public int DailyOffset { get; set; }
     }
 }
