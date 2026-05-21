@@ -10,9 +10,9 @@ namespace TESTAvaloniaApplication.BusinessLayer.Interfaces
     public interface IPressureMonitor
     {
         SystemStateEnum CurrentState { get; } //Property fortæller hvilken state logikken er i
-        void StartSystem(); //start af systemet
-        void StopSystem();   // 
-        void ResumeSystem(); // 
+        void StartSystem(); 
+        void StopSystem();   
+        void ResumeSystem(); 
         double[,] GetBuckets(); //Gør det muligt for skærm at hente punkterne
     }
 }
