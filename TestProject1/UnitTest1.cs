@@ -37,12 +37,12 @@ public class Tests
 
       sensor.Matrix = HojtTryk(); //her bliver den sensor vi oprettede som property skiftet til sensoren i højtryk, der simulere højt tryk på punkt (0,0)
 
-      // Boundary: 68 ticks → lige under grænsen → ingen alarm
-      for (int i = 0; i < 68; i++)
+      // Boundary: 34 ticks → lige under grænsen → ingen alarm
+      for (int i = 0; i < 34; i++)
           logic.RunStateMachineTick(0.1);
       Assert.That(logic.CurrentState, Is.EqualTo(SystemStateEnum.Monitorering));
-        
-      // Boundary: 1 tick mere (69 i alt) → præcis på grænsen → alarm
+
+      // Boundary: 1 tick mere (35 i alt) → præcis på grænsen → alarm
       logic.RunStateMachineTick(0.1);
       Assert.That(logic.CurrentState,
       Is.EqualTo(SystemStateEnum.Alarm)); //sikrer at current state er gået i alarm, for at testen virker
@@ -66,7 +66,7 @@ public class Tests
         var m = new int[4, 4];
         for (int r = 0; r < 4; r++)
             for (int c = 0; c < 4; c++)
-                m[r, c] = 2; // ADC=2 → ~6g kalibreret tryk < NOISE_FLOOR (10) → filtreres
+                m[r, c] = 2; // ADC=2 → ~6g kalibreret tryk < NOISE_FLOOR (15) → filtreres
         sensor.Matrix = m;
         for (int i = 0; i < 100; i++)
             logic.RunStateMachineTick(0.1);
@@ -75,8 +75,8 @@ public class Tests
         Assert.That(spande[0, 0], Is.EqualTo(0.0)); // noise floor filtrerer — spanden er stadig 0
         Assert.That(logic.CurrentState, Is.EqualTo(SystemStateEnum.Monitorering));
 
-        // Boundary test2: raw=3 → signal over noise floor → tæller som tryk, men ikke alarm endnu
-        m[0, 0] = 3; // ADC=3 → ~12g kalibreret tryk > NOISE_FLOOR (10) → tæller
+        // Boundary test2: raw=4 → signal over noise floor → tæller som tryk, men ikke alarm endnu
+        m[0, 0] = 4; // ADC=4 → ~18g kalibreret tryk > NOISE_FLOOR (15) → tæller
         sensor.Matrix = m;
         for (int i = 0; i < 100; i++)
             logic.RunStateMachineTick(0.1);
@@ -97,14 +97,14 @@ public class Tests
         logic.RunStateMachineTick(0.1); //Kalibrering -> monitorering
 
           sensor.Matrix = HojtTryk();  //skifter sensoren til højtryk som simulerer at en person sætter sig
-        for (int i = 0; i < 75; i++)
+        for (int i = 0; i < 40; i++)
             logic.RunStateMachineTick(0.1); //ligesom før, skaber alarm
 
         Assert.That(logic.CurrentState,
             Is.EqualTo(SystemStateEnum.Alarm)); //særg for at den er i alarm
 
         sensor.Matrix = TomMåtte(); //fjerner alt tryk
-        logic.RunStateMachineTick(0.1); //kører et tick, spanden falder under 200 og state maskine skifter øjeblikkeligt tilbage til monitorering
+        logic.RunStateMachineTick(0.1); //kører et tick, spanden falder under 5000 og state maskine skifter øjeblikkeligt tilbage til monitorering
 
         Assert.That(logic.CurrentState,
             Is.EqualTo(SystemStateEnum.Monitorering)); //sørg for at den kommer tilbage til monitorering
@@ -121,7 +121,7 @@ public class Tests
         logic.RunStateMachineTick(0.1); //Kalibrering -> monitorering
         
         sensor.Matrix = KolonneTryk(0); //bruger hjælpemetoden der skifter sensoren så alle 4 punkter i kolonne 0 har højtryk
-        for (int i = 0; i < 81; i++) //kører 81 ticks, nok til at alle 4 spande i kolonne 0 fyldes op til 200 (ALARM_THRESHOLD)
+        for (int i = 0; i < 40; i++) //kører 40 ticks, nok til at alle 4 spande i kolonne 0 fyldes op til 5000 (ALARM_THRESHOLD)
             logic.RunStateMachineTick(0.1); //fylder spanden mere og mere
 
         var spande = logic.GetBuckets(); //henter alle 16 spandeværdier fra logic så de kan tjekkes. SÅ de præcise værdier inde i alle spandene findes frem
@@ -129,21 +129,16 @@ public class Tests
         Assert.That(logic.CurrentState,
             Is.EqualTo(SystemStateEnum.Alarm)); //tjekker at systemet er gået i alarm
 
-        Assert.That(spande[0, 0], Is.EqualTo(200.0)); //tjekker at de præcise punkter er fyldt op til 200 (ALARM_THRESHOLD)
-        Assert.That(spande[1, 0], Is.EqualTo(200.0));
-        Assert.That(spande[2, 0], Is.EqualTo(200.0));
-        Assert.That(spande[3, 0], Is.EqualTo(200.0));
+        Assert.That(spande[0, 0], Is.EqualTo(5000.0)); //tjekker at de præcise punkter er fyldt op til 5000 (ALARM_THRESHOLD)
+        Assert.That(spande[1, 0], Is.EqualTo(5000.0));
+        Assert.That(spande[2, 0], Is.EqualTo(5000.0));
+        Assert.That(spande[3, 0], Is.EqualTo(5000.0));
         Assert.That(spande[0, 1], Is.EqualTo(0.0));  //tjekker at kolonne 1 er upåvirket, da algoritmen ikke må gå ud over naboen
     }
 
 
 
-    
-
-
-
-
-
+  
     //alt under her er hjælpemetoder, hvor de forskellige typer af "test" måtter returneres, så vi kan teste om programmet virker som det skal
     private int[,] TomMåtte() //Opretter en 4x4 matrix hvor alle 16 punkter er 1 (tom måtte, ingen belastning = ADClow)
     {
@@ -157,7 +152,7 @@ public class Tests
     private int[,] HojtTryk() //Opretter næste matrix  som skal simulere et højt tryk et sted på måtten
     {
         var m = TomMåtte(); //vi har allerede oprettet en tom 4x4 matrix, så den genbruger vi bare
-        m[0, 0] = 7; //men vi sætter punktet 0,0 i matrixen til at være 200, da højere værdier signalere højere tryk på måtten
+        m[0, 0] = 112; //sætter punktet 0,0 til ADChigh (112), hvilket kalibreres til 1650g og overstiger ALARM_THRESHOLD
         return m; //returnere måtten med et højt tryk
     }
 
@@ -165,7 +160,7 @@ public class Tests
     {                                        //opretter også en kolonne variabel
         var m = TomMåtte(); //genbruger den tomme måtte
         for (int r = 0; r < 4; r++) //løber igennem alle 4 rækker
-            m[r, kolonne] = 7; //sætter en kolonne til at have højt tryk på 200, da højere værdier signalere højere tryk på måtten
+            m[r, kolonne] = 112; //sætter en kolonne til ADChigh (112), hvilket kalibreres til 1650g og overstiger ALARM_THRESHOLD
         return m; //returnere måtten med den ene kolonne som har højt tryk
     }
 

@@ -27,10 +27,10 @@ namespace BusinessLayer.Services
 
         private int[,] _calibrationMedium = new int[4, 4]
        {
-        { 50, 52, 51, 55,},
-        { 56, 51,58, 52 },
-        { 52, 52, 49, 51 },
-        { 54, 52, 50, 53 }
+        { 92, 91, 91, 88,},
+        { 96, 91, 92, 92 },
+        { 92, 92, 89, 91 },
+        { 94, 92, 90, 93 }
        };
         
         private int[,] _calibrationHigh = new int[4, 4]
