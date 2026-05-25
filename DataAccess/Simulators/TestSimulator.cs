@@ -2,61 +2,39 @@
 
 namespace TESTAvaloniaApplication.DataAccess.Simulators
 {
-    //Her bliver der skabt en fake sensor som simulerer en person som sætter sig ned i et stykke tid og rejser sig igen i en uendelig cyklus
-    //Denne her test klasse adskiller sig fra unittesten i testprojekt, da den visuelt tester at programmet kan køres på en computer uden rpi
-    //
-    // Vi skriver under på kontrakten med ": ISensorReader",
-    // så pressurelogic2 kan bruge den præcis som om at det var rigtig hardware.
+    // Simulerer en person der sætter sig og rejser sig i en 100-tick cyklus.
+    // Bruges til at teste systemet visuelt på en computer uden RPi.
     public class TestSimulator : ISensorReader
     {
-        // Tæller hvor mange gange ReadMatrix er blevet kaldt siden programmet startede.
-        // Bruges til at beregne hvilken fase i cyklussen vi er i.
+        // Tæller ticks for at holde styr på hvilken fase i cyklussen vi er i
         private int _counter = 0;
 
-        // Bruges til at generere tilfældig støj på alle 16 punkter.
+        // Bruges til at generere tilfældig baggrundsstøj på alle 16 punkter
         private Random _rand = new Random();
 
-        // Kaldes af PressureLogic2 ved hvert tick (hvert 100ms).
-        // Returnerer en 4x4 matrix der simulerer trykfordelingen på måtten.
         public int[,] ReadMatrix()
         {
             int[,] matrix = new int[4, 4];
             _counter++;
 
-            // TRIN 1: Fyld alle 16 punkter med tilfældig støj (0-2).
-            // Dette simulerer den naturlige variation en rigtig sensor altid vil have,
-            // selv når ingen sidder på måtten.
+            // Alle punkter får tilfældig støj (0-2) som simulerer en rigtig sensors naturlige variation
             for (int r = 0; r < 4; r++)
-            {
                 for (int c = 0; c < 4; c++)
-                {
                     matrix[r, c] = _rand.Next(0, 3);
-                }
-            }
 
-            // TRIN 2: Beregn hvilken fase af cyklussen vi er i.
-            // Cyklussen går fra 0 til 99 og starter forfra — altså 100 ticks per runde.
-            // Ved 100ms per tick tager én runde 10 sekunder i det rigtige system.
+            // Cyklussen gentages hver 100 ticks — de første 50 sidder personen, de næste 50 er rejst
             int cyklus = _counter % 100;
 
             if (cyklus < 50)
             {
-                // Første halvdel (ticks 0-49): personen sætter sig og trykket stiger.
-                // Råværdien stiger fra baseline (~1) op mod 150
-                // Højere råværdi svarer til højere tryk i systemet
-                // Dette giver en stigende belastning på punkt (1,1)
-
-                matrix[1, 1] = Math.Min(150, 1 + (cyklus * 3));   // Punkt (1,1): stiger hurtigt fra 1 op mod 150
-
-                //Laver et andet punkt
-                matrix[2, 2] = Math.Min(130, 1 + (cyklus * 3));   // Punkt (2,2): starter ved 1 og stiger op mod 130
-
-                matrix[1, 3] = Math.Min(120, 1 + (cyklus * 2));   // Punkt (1,3): starter ved 1 og stiger langsommere op mod 120
+                // Personen sætter sig — tre punkter stiger gradvist fra 1 op mod deres maksimum
+                matrix[1, 1] = Math.Min(150, 1 + (cyklus * 3));
+                matrix[2, 2] = Math.Min(130, 1 + (cyklus * 3));
+                matrix[1, 3] = Math.Min(120, 1 + (cyklus * 2));
             }
             else
             {
-                // Anden halvdel (ticks 50-99): personen har rejst sig.
-                // Punkterne falder tilbage til baseline (~1) — kun støj tilbage.
+                // Personen rejser sig — punkterne falder tilbage til baseline
                 matrix[1, 1] = 1;
                 matrix[2, 2] = 1;
                 matrix[1, 3] = 1;

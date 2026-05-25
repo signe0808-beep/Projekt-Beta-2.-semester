@@ -52,24 +52,21 @@ namespace TESTAvaloniaApplication.DataAccess.Drivers
         {
             int[,] matrix = new int[4, 4];
 
-            // Kør alle 4 rækker igennem en ad gangen
             for (int r = 0; r < 4; r++)
             {
-                // ÆNDRING 2: Gør den aktuelle række til Output, før den sættes High
+                // Sættes til Output inden High — man kan ikke skrive til en Input-pin
                 _gpio.SetPinMode(_rowPins[r], PinMode.Output);
                 _gpio.Write(_rowPins[r], PinValue.High);
 
-                // Kort delay (1 ms) sikrer, at spændingen stabiliserer sig før aflæsning
-                // NOTE: Hvis Velostaten er sløv til at reagere, kan I prøve at sætte denne til 5 eller 10 ms.
+                // 1 ms så spændingen stabiliserer sig — øg til 5-10 ms hvis Velostaten er langsom
                 System.Threading.Thread.Sleep(1);
 
-                // Aflæser de 4 kolonner via AD-konverteren
                 matrix[r, 0] = _mcp.Read(0);
                 matrix[r, 1] = _mcp.Read(1);
                 matrix[r, 2] = _mcp.Read(2);
                 matrix[r, 3] = _mcp.Read(3);
 
-                // ÆNDRING 3: I stedet for at sætte rækken til Low, sætter vi den tilbage til Input (frakoblet)
+                // Tilbage til Input (High-Z) så rækken ikke påvirker næste måling
                 _gpio.SetPinMode(_rowPins[r], PinMode.Input);
             }
 

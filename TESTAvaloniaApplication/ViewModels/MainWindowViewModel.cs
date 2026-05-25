@@ -30,6 +30,7 @@ namespace TESTAvaloniaApplication.ViewModels
 
         public HeatmapViewModel HeatmapData { get; }
 
+
         public MainWindowViewModel(IPressureMonitor motor)
         {
             _minMotor = motor;
@@ -86,6 +87,8 @@ namespace TESTAvaloniaApplication.ViewModels
         }
 
         [RelayCommand]
+
+        //ToggleSystem styrer start, stop og resume
         private void ToggleSystem()
         {
             if (!_systemStartet)
