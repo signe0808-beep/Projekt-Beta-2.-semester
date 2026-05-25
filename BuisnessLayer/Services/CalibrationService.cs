@@ -15,7 +15,7 @@ namespace BusinessLayer.Services
     {
         private SensorCalibrationCurve[,] _curves = new SensorCalibrationCurve[4, 4];
 
-        //Her blev der påført vægt på måtten svarende til 0g (LOW), 300g (MEDIUM og 1650g (HIGH)
+        //Her blev der påført vægt på måtten svarende til 0g (LOW), 400g (MEDIUM og 1650g (HIGH)
 
         private int[,] _calibrationLow = new int[4, 4]
         {
@@ -35,10 +35,10 @@ namespace BusinessLayer.Services
         
         private int[,] _calibrationHigh = new int[4, 4]
       {
-        { 112, 107, 108, 109,},
-        { 110, 109, 110, 108 },
-        { 111, 112, 110, 109 },
-        { 111, 113, 112, 110 }
+        { 111, 112, 110, 115,},
+        { 114, 113, 111, 114 },
+        { 111, 112, 115, 112 },
+        { 111, 113, 110, 113 }
       };
 
         //bygger kalibreringskurven per sensor med tre referencepunkter (low, medium, high)
